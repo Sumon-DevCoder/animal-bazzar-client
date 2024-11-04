@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-
 import "./globals.css";
 import { Inter } from "@next/font/google";
+import ReduxProvider from "./provider/ReduxProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -22,7 +22,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="min-h-screen">{children}</div>
+        <ReduxProvider>{children}</ReduxProvider>
+        {/* <div>{children}</div> */}
       </body>
     </html>
   );

@@ -1,6 +1,7 @@
 "use client";
 
-import nexiousInstance from "@/config/nexious.config";
+import { useCreateProductMutation } from "@/redux/features/product/productApi";
+import { redirect } from "next/navigation";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { FieldValues, useForm } from "react-hook-form";
@@ -14,7 +15,7 @@ const CreateProduct = () => {
     reset,
   } = useForm();
 
-  // const [createRoom] = useCreateRoomMutation();
+  const [CreateProduct] = useCreateProductMutation();
 
   // Image upload function
   const uploadImageToImgBB = async (file: File) => {
@@ -65,17 +66,12 @@ const CreateProduct = () => {
       console.log(productInfo);
 
       // send to data to databse
-
-      const res = await nexiousInstance.post("/products", {
-        cache: "no-store",
-      });
-
-      const res = await createRoom(RoomInfo).unwrap();
+      const res = await CreateProduct(productInfo).unwrap();
 
       if (res) {
         toast.success(res?.message, { id: toastId, duration: 3000 });
         reset();
-        navigate("/admin/rooms-list");
+        redirect("/admin-dashboard/update-product");
       }
 
       console.log(res);
