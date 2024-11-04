@@ -71,9 +71,9 @@ const Navbar = ({ session }: { session: UserProps | null }) => {
       </Link>
       {isAdmin && (
         <Link
-          href="/admin/dashboard"
+          href="/admin-dashboard"
           className={`p-2 rounded-lg text-slate-200 ${
-            pathname === "/admin/dashboard" ? "text-lime-500" : ""
+            pathname === "/admin-dashboard" ? "text-lime-500" : ""
           }`}
         >
           Dashboard
@@ -81,9 +81,9 @@ const Navbar = ({ session }: { session: UserProps | null }) => {
       )}
       {isVerifiedUser && (
         <Link
-          href="/user/dashboard"
+          href="/admin-dashboard"
           className={`p-2 rounded-lg text-slate-200 ${
-            pathname === "/user/dashboard" ? "text-lime-500" : ""
+            pathname === "/admin-dashboard" ? "text-lime-500" : ""
           }`}
         >
           User Dashboard

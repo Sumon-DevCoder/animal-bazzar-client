@@ -10,10 +10,5 @@ export default function dashboardLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <div>
-      {children}
-      footer
-    </div>
-  );
+  return <div>{children}</div>;
 }

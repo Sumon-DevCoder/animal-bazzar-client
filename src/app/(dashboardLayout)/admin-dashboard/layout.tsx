@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import SidebarLayout from "../../components/SidebarLayout";
 
 export const metadata: Metadata = {
   title: "Dashboard - Animal Bazaar",
@@ -11,9 +12,11 @@ export default function AdminDashboardLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div>
-      admin dashboard sidebar
-      {children}
+    <div className="flex">
+      <div>
+        <SidebarLayout />
+      </div>
+      <div className="flex-grow border-2 p-2">{children}</div>
     </div>
   );
 }
