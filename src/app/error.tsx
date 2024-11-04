@@ -5,10 +5,10 @@ import Head from "next/head";
 
 const Error = ({
   error,
-  rest,
+  rest = () => window.location.reload(),
 }: {
   error: Error & { digest?: string };
-  rest: () => void;
+  rest?: () => void;
 }) => {
   return (
     <>
@@ -30,7 +30,7 @@ const Error = ({
             </button>
           </Link>
           <button
-            onClick={() => rest()}
+            onClick={() => rest}
             className="bg-yellow-600 hover:bg-yellow-700 text-white font-semibold py-2 px-4 rounded transition duration-300"
           >
             🔄 Try Again

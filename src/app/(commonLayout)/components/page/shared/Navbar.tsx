@@ -1,20 +1,29 @@
 "use client";
 
 import DropdownProfile from "@/app/components/DropDownProfile";
-import Link from "next/link";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { usePathname } from "next/navigation";
 import { useState } from "react";
-// import CheckUserInfo from "@/components/CheckUserRole/CheckUserInfo";
+import logoImg from "../../../../../../public/assets/animal_logo.jpg";
+import Image from "next/image";
+import Link from "next/link";
 
-const Navbar = () => {
-  // const { isAdmin, isVerifiedUser } = CheckUserInfo();
+// type
+type UserProps = {
+  user?: {
+    name?: string | null | undefined;
+    email?: string | null | undefined;
+    image?: string | null | undefined;
+  };
+};
+
+const Navbar = ({ session }: { session: UserProps | null }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname(); // Get the current pathname
 
-  const isAdmin = true;
-  const isVerifiedUser = true;
+  const isAdmin = true; // Replace with your actual logic
+  const isVerifiedUser = true; // Replace with your actual logic
 
-  const handlehrefggleMenu = () => {
+  const handleToggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
@@ -22,39 +31,50 @@ const Navbar = () => {
     <>
       <Link
         href="/"
-        className="border-2 border-indigo-500 p-2 rounded-lg text-indigo-500"
+        className={`p-2 rounded-lg text-slate-200 ${
+          pathname === "/" ? "text-lime-500" : ""
+        }`}
       >
         Home
       </Link>
       <Link
         href="/product"
-        className="border-2 border-indigo-500 p-2 rounded-lg text-indigo-500"
+        className={`p-2 rounded-lg text-slate-200 ${
+          pathname === "/product" ? "text-lime-500" : ""
+        }`}
       >
         Products
       </Link>
-
       <Link
         href="/about"
-        className="border-2 border-indigo-500 p-2 rounded-lg text-indigo-500"
+        className={`p-2 rounded-lg text-slate-200 ${
+          pathname === "/about" ? "text-lime-500" : ""
+        }`}
       >
         About
       </Link>
       <Link
         href="/contact"
-        className="border-2 border-indigo-500 p-2 rounded-lg text-indigo-500"
+        className={`p-2 rounded-lg text-slate-200 ${
+          pathname === "/contact" ? "text-lime-500" : ""
+        }`}
       >
         Contact
       </Link>
       <Link
         href="/cart"
-        className="border-2 border-indigo-500 p-2 rounded-lg text-indigo-500"
+        className={`p-2 rounded-lg text-slate-200 ${
+          pathname === "/cart" ? "text-lime-500" : ""
+        }`}
       >
         Carts
       </Link>
       {isAdmin && (
         <Link
           href="/admin/dashboard"
-          className="border-2 border-indigo-500 p-2 rounded-lg text-indigo-500"
+          className={`p-2 rounded-lg text-slate-200 ${
+            pathname === "/admin/dashboard" ? "text-lime-500" : ""
+          }`}
         >
           Dashboard
         </Link>
@@ -62,7 +82,9 @@ const Navbar = () => {
       {isVerifiedUser && (
         <Link
           href="/user/dashboard"
-          className="border-2 border-indigo-500 p-2 rounded-lg text-indigo-500"
+          className={`p-2 rounded-lg text-slate-200 ${
+            pathname === "/user/dashboard" ? "text-lime-500" : ""
+          }`}
         >
           User Dashboard
         </Link>
@@ -72,14 +94,14 @@ const Navbar = () => {
 
   return (
     <div className="sticky hrefp-0 z-50">
-      <div className="navbar bg-white shadow-lg px-5">
+      <div className="navbar bg-slate-800 shadow-lg px-5 text-white">
         <div className="navbar-start">
           <div className="dropdown">
             <div
               tabIndex={0}
-              role="buthrefn"
+              role="button"
               className="btn btn-ghost lg:hidden"
-              onClick={handlehrefggleMenu}
+              onClick={handleToggleMenu}
             >
               {isMenuOpen ? (
                 // Close Icon
@@ -118,7 +140,7 @@ const Navbar = () => {
             {isMenuOpen && (
               <ul
                 tabIndex={0}
-                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow gap-1"
+                className="menu menu-sm dropdown-content bg-gray-600  rounded-box z-[1] mt-3 w-52 p-2 shadow gap-1"
               >
                 {Links}
               </ul>
@@ -126,9 +148,10 @@ const Navbar = () => {
           </div>
           <Link
             href={`/`}
-            className="btn btn-ghost text-lg md:text-xl bg-gradient-href-r from-indigo-500"
+            className="btn btn-ghost text-lg md:text-xl bg-gradient-href-r from-slate-200"
           >
-            Animal Bazaar
+            <Image className="h-7 w-7" src={logoImg} alt="Animal Bazaar Logo" />
+            <span className="text-2xl mt-1">Animal Bazaar</span>
           </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
@@ -137,7 +160,7 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="navbar-end cursor-pointer">
-          <DropdownProfile />
+          <DropdownProfile session={session} />
         </div>
       </div>
     </div>

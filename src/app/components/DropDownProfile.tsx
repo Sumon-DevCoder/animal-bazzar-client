@@ -1,107 +1,81 @@
-// /* eslint-disable @typescript-eslint/no-unused-vars */
-// /* eslint-disable @typescript-eslint/no-explicit-any */
-// import {
-//   DropdownMenu,
-//   DropdownMenuContent,
-//   DropdownMenuItem,
-//   DropdownMenuLabel,
-//   DropdownMenuSeparahrefr,
-//   DropdownMenuTrigger,
-// } from "@/app/components/ui/dropdown-menu";
-// import {
-//   Avatar,
-//   AvatarFallback,
-//   AvatarImage,
-// } from "@/app/components/ui/avatar";
-// import { hrefast } from "sonner";
-// // import { logout } from "@/redux/features/auth/authSlice";
-// // import { useAppDispatch } from "@/redux/hooks";
-// import PrimaryButhrefn from "@/app/components/PrimaryButhrefn";
-// // import CheckUserInfo from "../CheckUserRole/CheckUserInfo";
-// // import useCurrentUserData from "@/hoooks/useCurrentData";
+import { useState } from "react";
+import Link from "next/link";
+import { signOut } from "next-auth/react";
+import { FaSignInAlt } from "react-icons/fa";
+import PrimaryButton from "./PrimaryButton";
 
-// // Import icons from react-icons
-// import { FaUserCircle } from "react-icons/fa";
-// import { MdDashboard, MdLogout } from "react-icons/md";
-// import { BsCalendar2Check } from "react-icons/bs";
+type UserProps = {
+  user?: {
+    name?: string | null | undefined;
+    email?: string | null | undefined;
+    image?: string | null | undefined;
+  };
+};
 
-// // Import motion for animations
-// import { motion } from "framer-motion";
-// import Link from "next/link";
+const DropDownProfile = ({ session }: { session: UserProps | null }) => {
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
-// const DropdownProfile = () => {
-//   const { user, isAdmin } = CheckUserInfo();
-//   const dispatch = useAppDispatch();
-//   const { currentUserInfo } = useCurrentUserData();
+  const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
 
-//   const handleLogout = async () => {
-//     try {
-//       await dispatch(logout());
-//       hrefast.success("Logout Successful");
-//     } catch (err: any) {
-//       hrefast.error("Logout Failed. Please try again.");
-//     }
-//   };
+  return (
+    <div className="relative">
+      {session?.user ? (
+        <>
+          <button
+            onClick={toggleDropdown}
+            className="flex items-center space-x-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+          >
+            <span>Profile</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className={`h-5 w-5 transition-transform ${
+                dropdownOpen ? "rotate-180" : "rotate-0"
+              }`}
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </button>
 
-//   return (
-//     <div>
-//       {user ? (
-//         <DropdownMenu>
-//           <DropdownMenuTrigger asChild>
-//             <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-//               <Avatar>
-//                 <AvatarImage src={currentUserInfo?.img} />
-//                 <AvatarFallback>CN</AvatarFallback>
-//               </Avatar>
-//             </motion.div>
-//           </DropdownMenuTrigger>
-//           <motion.div
-//             initial={{ opacity: 0, y: -10 }}
-//             animate={{ opacity: 1, y: 0 }}
-//             transition={{ duration: 0.3 }}
-//           >
-//             <DropdownMenuContent>
-//               <DropdownMenuLabel>
-//                 <Link href={"/user/profile"}>
-//                   <FaUserCircle className="inline mr-2" />{" "}
-//                   {currentUserInfo?.name}
-//                 </Link>
-//               </DropdownMenuLabel>
-//               <DropdownMenuSeparahrefr />
-//               {isAdmin ? (
-//                 <DropdownMenuItem>
-//                   <Link href="/admin/dashboard">
-//                     <MdDashboard className="inline mr-2" /> Dashboard
-//                   </Link>
-//                 </DropdownMenuItem>
-//               ) : (
-//                 <DropdownMenuItem>
-//                   <Link href={"/user/my-bookings"}>
-//                     <BsCalendar2Check className="inline mr-2" /> My Bookings
-//                   </Link>
-//                 </DropdownMenuItem>
-//               )}
-//               <DropdownMenuSeparahrefr />
-//               <DropdownMenuItem
-//                 className="cursor-pointer"
-//                 onClick={handleLogout}
-//               >
-//                 <MdLogout className="inline mr-2" /> Logout
-//               </DropdownMenuItem>
-//             </DropdownMenuContent>
-//           </motion.div>
-//         </DropdownMenu>
-//       ) : (
-//         <PrimaryButhrefn path={"/login"} name="Login" />
-//       )}
-//     </div>
-//   );
-// };
-
-// export default DropdownProfile;
-
-const DropDownProfile = () => {
-  return <div></div>;
+          {dropdownOpen && (
+            <div className="absolute right-0 mt-2 w-48 bg-white rounded shadow-lg">
+              <Link
+                href="/dashboard"
+                className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
+              >
+                Dashboard
+              </Link>
+              <Link
+                href="/profile"
+                className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
+              >
+                Profile
+              </Link>
+              <button
+                onClick={() => signOut()}
+                className="w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100"
+              >
+                Logout
+              </button>
+            </div>
+          )}
+        </>
+      ) : (
+        <PrimaryButton
+          path="/login"
+          name="Login"
+          icons={<FaSignInAlt className="mr-2" />}
+        />
+      )}
+    </div>
+  );
 };
 
 export default DropDownProfile;
