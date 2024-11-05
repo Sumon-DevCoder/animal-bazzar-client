@@ -1,25 +1,34 @@
 "use client";
 
-import { useCreateProductMutation } from "@/redux/features/product/productApi";
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-import { FieldValues, useForm } from "react-hook-form";
+import { useEffect } from "react";
+import { useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useForm, FieldValues } from "react-hook-form";
 import { toast } from "sonner";
+import {
+  useGetSingleProductQuery,
+  useUpdateProductByIdMutation,
+} from "../../../../../redux/features/product/productApi";
 
-const CreateProduct = () => {
+const UpdateProduct = () => {
+  const productId = useParams();
+  const { data: productData } = useGetSingleProductQuery(productId?.id);
+  const product = productData?.data;
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm();
+    setValue,
+  } = useForm<FieldValues>();
 
-  const [CreateProduct] = useCreateProductMutation();
+  const [updateProductById] = useUpdateProductByIdMutation();
+  const router = useRouter();
 
   // Image upload function
   const uploadImageToImgBB = async (file: File) => {
     const url = `https://api.imgbb.com/1/upload?key=${"9b72c2e7f55726fd9a28bfb8bfedc08b"}`;
-
     const formData = new FormData();
     formData.append("image", file);
 
@@ -29,7 +38,6 @@ const CreateProduct = () => {
         body: formData,
       });
       const data = await response.json();
-
       if (data.success) {
         return data.data.url;
       } else {
@@ -41,41 +49,55 @@ const CreateProduct = () => {
     }
   };
 
-  // onSubmit function
+  // Set default values when product data is loaded
+  useEffect(() => {
+    if (product) {
+      setValue("productName", product.name);
+      setValue("description", product.description);
+      setValue("price", product.price);
+      setValue("stockQuantity", product.stockQuantity);
+      setValue("category", product.category);
+    }
+  }, [product, setValue]);
+
+  // onSubmit function for updating product
   const onSubmit = async (data: FieldValues) => {
-    const toastId = toast.loading("Creating...");
+    const toastId = toast.loading("Updating...");
 
     try {
-      // Upload the single image
-      const imgFile = data.img[0] as File; // Get the first file only
-      const imgUrl = await uploadImageToImgBB(imgFile);
-      if (!imgUrl) {
-        throw new Error("Image upload failed");
+      // Handle image upload only if a new image is provided
+      let imgUrl = product?.image; // Default to existing image if no new image is uploaded
+      if (data.img && data.img.length > 0) {
+        const imgFile = data.img[0] as File;
+        imgUrl = await uploadImageToImgBB(imgFile);
+        if (!imgUrl) {
+          throw new Error("Image upload failed");
+        }
       }
 
+      // Construct updated product information
       const productInfo = {
-        name: data.productName,
-        description: data.description,
-        price: Number(data.price),
-        stockQuantity: Number(data.stockQuantity),
-        category: data.category,
-        image: imgUrl, // Store the single image URL
+        name: data.productName, // Defaults to existing name since we set it in useEffect
+        description: data.description, // Defaults to existing description
+        price: Number(data.price), // Defaults to existing price
+        stockQuantity: Number(data.stockQuantity), // Defaults to existing stock quantity
+        category: data.category, // Defaults to existing category
+        image: imgUrl, // Use updated or existing image URL
       };
 
-      console.log(productInfo);
-
-      // send to data to databse
-      const res = await CreateProduct(productInfo).unwrap();
+      // Update product by ID
+      const res = await updateProductById({
+        id: productId?.id,
+        productInfo,
+      }).unwrap();
 
       if (res) {
         toast.success(res?.message, { id: toastId, duration: 3000 });
         reset();
+        router.push("/admin-dashboard/product-list");
       }
-
-      console.log(res);
     } catch (err) {
       const serverMsgErr = (err as Error)?.message || "Something went wrong";
-
       toast.error(serverMsgErr, { id: toastId, duration: 3000 });
     }
   };
@@ -83,8 +105,8 @@ const CreateProduct = () => {
   // Validation for minimum 1 image upload
   const validateFiles = (files: FileList): Promise<string | true> => {
     return new Promise((resolve) => {
-      if (files.length < 1) {
-        resolve("At least 1 image is required");
+      if (files.length > 1) {
+        resolve("Only one image can be uploaded");
       }
       resolve(true);
     });
@@ -93,7 +115,7 @@ const CreateProduct = () => {
   return (
     <div className="mx-auto w-full bg-white shadow-md rounded-lg p-8">
       <h2 className="text-2xl font-semibold text-indigo-700 text-center mb-4">
-        Create a Product
+        Update Product
       </h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* Product Name */}
@@ -227,33 +249,31 @@ const CreateProduct = () => {
             htmlFor="product-image"
             className="mb-2 block text-sm font-medium text-indigo-700"
           >
-            Product Image
+            Product Image (optional)
           </label>
           <input
             type="file"
-            {...register("img", {
-              required: "An image is required",
-              validate: validateFiles,
-            })}
+            {...register("img", { validate: validateFiles })}
             id="product-image"
             accept="image/*"
             className="w-full rounded-md border border-gray-300 bg-white py-3 px-4 text-sm font-medium text-gray-700 outline-none focus:border-indigo-500 focus:shadow-md"
           />
-          <small className="text-gray-500">Upload an image</small>
+          <small className="text-gray-500">Upload a new image (optional)</small>
           {errors.img && (
             <p className="text-red-500">{errors.img.message as string}</p>
           )}
         </div>
 
+        {/* Submit Button */}
         <button
           type="submit"
-          className="mt-4 w-full rounded-md bg-indigo-600 py-3 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none"
+          className="w-full rounded-md bg-indigo-600 py-3 text-sm font-semibold text-white hover:bg-indigo-700 focus:outline-none"
         >
-          Create Product
+          Update Product
         </button>
       </form>
     </div>
   );
 };
 
-export default CreateProduct;
+export default UpdateProduct;

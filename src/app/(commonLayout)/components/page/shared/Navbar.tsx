@@ -6,22 +6,12 @@ import { useState } from "react";
 import logoImg from "../../../../../../public/assets/animal_logo.jpg";
 import Image from "next/image";
 import Link from "next/link";
+import useCurrentUserInfo from "../../../../../hooks/useCurrentUserInfo";
 
-// type
-type UserProps = {
-  user?: {
-    name?: string | null | undefined;
-    email?: string | null | undefined;
-    image?: string | null | undefined;
-  };
-};
-
-const Navbar = ({ session }: { session: UserProps | null }) => {
+const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const pathname = usePathname(); // Get the current pathname
-
-  const isAdmin = true; // Replace with your actual logic
-  const isVerifiedUser = true; // Replace with your actual logic
+  const pathname = usePathname();
+  const { isAdmin, isVerifiedUser } = useCurrentUserInfo();
 
   const handleToggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -81,12 +71,12 @@ const Navbar = ({ session }: { session: UserProps | null }) => {
       )}
       {isVerifiedUser && (
         <Link
-          href="/admin-dashboard"
+          href="/user-dashboard"
           className={`p-2 rounded-lg text-slate-200 ${
             pathname === "/admin-dashboard" ? "text-lime-500" : ""
           }`}
         >
-          User Dashboard
+          Dashboard
         </Link>
       )}
     </>
@@ -160,7 +150,7 @@ const Navbar = ({ session }: { session: UserProps | null }) => {
           </ul>
         </div>
         <div className="navbar-end cursor-pointer">
-          <DropdownProfile session={session} />
+          <DropdownProfile />
         </div>
       </div>
     </div>

@@ -11,7 +11,7 @@ export const productApi = baseApi.injectEndpoints({
     }),
     getSingleProduct: builder.query({
       query: (productId) => {
-        console.log("api hitting", productId);
+        console.log("product get api hitting", productId);
         return {
           method: "GET",
           url: `/products/${productId}`,

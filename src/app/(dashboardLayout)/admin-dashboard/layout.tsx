@@ -12,11 +12,11 @@ export default function AdminDashboardLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex">
+    <div className="flex min-h-screen">
       <div>
         <SidebarLayout />
       </div>
-      <div className="flex-grow border-2 p-2">{children}</div>
+      <div className="flex-grow p-2">{children}</div>
     </div>
   );
 }

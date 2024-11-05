@@ -1,6 +1,7 @@
 "use client";
 import { TProduct } from "@/app/(commonLayout)/product/page";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
@@ -112,6 +113,9 @@ const ProductList = ({ productsData }: ProductListProps) => {
               <p className="text-green-600 font-bold text-lg">
                 ${product.price}
               </p>
+              <Link href={`/product/${product?._id}`} className="btn">
+                Details
+              </Link>
             </div>
           ))}
         </div>

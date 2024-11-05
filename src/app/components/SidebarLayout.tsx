@@ -2,32 +2,43 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { FaChevronDown, FaChevronUp } from "react-icons/fa"; // Import icons from React Icons
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import useCurrentUserInfo from "../../hooks/useCurrentUserInfo";
 
 const AdminSidebar = () => {
   const pathname = usePathname();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  // Example sidebar links with nested links for Products
-  const links = [
-    { name: "Dashboard", path: "/admin/dashboard" },
-    {
-      name: "Products",
-      subLinks: [
-        { name: "Create Product", path: "/admin-dashboard/create-product" },
-        { name: "Product List", path: "/admin-dashboard/update-product" },
-      ],
-    },
-    { name: "Orders", path: "/admin/orders" },
-    { name: "Users", path: "/admin/users" },
-    { name: "Settings", path: "/admin/settings" },
-  ];
+  const { isAdmin } = useCurrentUserInfo();
+
+  // Define links outside the conditional block
+  const links = isAdmin
+    ? [
+        { name: "Dashboard", path: "/admin/dashboard" },
+        {
+          name: "Products",
+          subLinks: [
+            { name: "Create Product", path: "/admin-dashboard/create-product" },
+            { name: "Product List", path: "/admin-dashboard/product-list" },
+          ],
+        },
+        { name: "Orders", path: "/admin/orders" },
+        { name: "UserManagement", path: "/admin-dashboard/user-management" },
+        { name: "Settings", path: "/admin/settings" },
+      ]
+    : [
+        { name: "Dashboard", path: "/user/dashboard" },
+        { name: "My Bookings", path: "/user/my-bookings" },
+        { name: "Orders", path: "/user/orders" },
+        { name: "Users", path: "/user/users" },
+        { name: "Settings", path: "/user/settings" },
+      ];
 
   return (
-    <div className="sticky top-0 z-10">
-      <aside className="w-64  bg-gray-800 text-white shadow-md h-full ">
+    <div className="sticky top-0 z-10 ">
+      <aside className="w-64 bg-gray-800 text-white shadow-md h-[100vh]">
         <div className="p-4 text-lg font-bold border-b border-gray-700">
-          Admin Dashboard
+          {isAdmin ? "Admin Dashboard" : "User Dashboard"}
         </div>
         <nav className="mt-4">
           <ul>
