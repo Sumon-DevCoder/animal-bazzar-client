@@ -1,19 +1,28 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { logout } from "@/redux/features/auth/authSlice";
 import { FaSignInAlt, FaUserCircle, FaSignOutAlt } from "react-icons/fa";
 import PrimaryButton from "./PrimaryButton";
 import useCurrentUserData from "../../hooks/useCurrentUserInfoData";
-import Image from "next/image";
 import { toast } from "sonner";
 import { useAppDispatch } from "@/redux/hooks";
+import useCurrentUserInfo from "@/hooks/useCurrentUserInfo";
+import { MdDashboard } from "react-icons/md";
 
 const DropDownProfile = () => {
-  const { currentUserInfo: user } = useCurrentUserData();
+  const { currentUserInfo: user, refetch } = useCurrentUserData();
+  const { isAdmin } = useCurrentUserInfo();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dispatch = useAppDispatch();
+
+  console.log(user);
+
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
 
   // toggle
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
@@ -31,14 +40,12 @@ const DropDownProfile = () => {
     <div className="relative">
       {user ? (
         <>
-          <button onClick={toggleDropdown} className="">
-            <div className="avatar flex justify-center">
+          <button onClick={toggleDropdown}>
+            <div className="avatar flex justify-center w-10 h-10 md:w-12 md:h-12">
               {user?.img ? (
-                <Image
+                <img
                   src={user?.img}
                   alt="User image"
-                  width={33}
-                  height={33}
                   className="rounded-full"
                 />
               ) : (
@@ -56,13 +63,23 @@ const DropDownProfile = () => {
                 <FaUserCircle className="mr-2" />
                 {user?.name}
               </Link>
-              <Link
-                href="/profile"
-                className="flex items-center px-4 py-2 text-gray-800 hover:bg-gray-100"
-              >
-                <FaUserCircle className="mr-2" />
-                Profile
-              </Link>
+              {isAdmin ? (
+                <Link
+                  href="/admin-dashboard"
+                  className="flex items-center px-4 py-2 text-gray-800 hover:bg-gray-100"
+                >
+                  <MdDashboard className="mr-2" />
+                  Dashboard
+                </Link>
+              ) : (
+                <Link
+                  href="/profile"
+                  className="flex items-center px-4 py-2 text-gray-800 hover:bg-gray-100"
+                >
+                  <FaUserCircle className="mr-2" />
+                  Profile
+                </Link>
+              )}
               <button
                 onClick={handleLogout}
                 className="flex items-center w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100"

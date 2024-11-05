@@ -1,5 +1,7 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
+import logoImg from "../../../public/assets/animal_logo.jpg";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
@@ -14,7 +16,7 @@ const AdminSidebar = () => {
   // Define links outside the conditional block
   const links = isAdmin
     ? [
-        { name: "Dashboard", path: "/admin/dashboard" },
+        { name: "Dashboard", path: "/admin-dashboard" },
         {
           name: "Products",
           subLinks: [
@@ -37,8 +39,14 @@ const AdminSidebar = () => {
   return (
     <div className="sticky top-0 z-10 ">
       <aside className="w-64 bg-gray-800 text-white shadow-md h-[100vh]">
-        <div className="p-4 text-lg font-bold border-b border-gray-700">
-          {isAdmin ? "Admin Dashboard" : "User Dashboard"}
+        <div className="p-2 text-lg font-bold border-b border-gray-700 flex">
+          <Link
+            href={`/`}
+            className="btn btn-ghost text-lg md:text-xl bg-gradient-href-r from-slate-200"
+          >
+            <Image className="h-7 w-7" src={logoImg} alt="Animal Bazaar Logo" />
+            <span className="text-2xl mt-1">Animal Bazaar</span>
+          </Link>
         </div>
         <nav className="mt-4">
           <ul>

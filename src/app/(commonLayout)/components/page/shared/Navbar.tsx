@@ -22,7 +22,7 @@ const Navbar = () => {
       <Link
         href="/"
         className={`p-2 rounded-lg text-slate-200 ${
-          pathname === "/" ? "text-lime-500" : ""
+          pathname === "/" ? "text-orange-400  border-orange-600" : ""
         }`}
       >
         Home
@@ -30,7 +30,7 @@ const Navbar = () => {
       <Link
         href="/product"
         className={`p-2 rounded-lg text-slate-200 ${
-          pathname === "/product" ? "text-lime-500" : ""
+          pathname === "/product" ? "text-orange-400  border-orange-600" : ""
         }`}
       >
         Products
@@ -38,7 +38,7 @@ const Navbar = () => {
       <Link
         href="/about"
         className={`p-2 rounded-lg text-slate-200 ${
-          pathname === "/about" ? "text-lime-500" : ""
+          pathname === "/about" ? "text-orange-400  border-orange-600" : ""
         }`}
       >
         About
@@ -46,7 +46,7 @@ const Navbar = () => {
       <Link
         href="/contact"
         className={`p-2 rounded-lg text-slate-200 ${
-          pathname === "/contact" ? "text-lime-500" : ""
+          pathname === "/contact" ? "text-orange-400  border-orange-600" : ""
         }`}
       >
         Contact
@@ -54,7 +54,7 @@ const Navbar = () => {
       <Link
         href="/cart"
         className={`p-2 rounded-lg text-slate-200 ${
-          pathname === "/cart" ? "text-lime-500" : ""
+          pathname === "/cart" ? "text-orange-400  border-orange-600" : ""
         }`}
       >
         Carts
@@ -63,7 +63,9 @@ const Navbar = () => {
         <Link
           href="/admin-dashboard"
           className={`p-2 rounded-lg text-slate-200 ${
-            pathname === "/admin-dashboard" ? "text-lime-500" : ""
+            pathname === "/admin-dashboard"
+              ? "text-orange-400  border-orange-600"
+              : ""
           }`}
         >
           Dashboard
@@ -73,7 +75,9 @@ const Navbar = () => {
         <Link
           href="/user-dashboard"
           className={`p-2 rounded-lg text-slate-200 ${
-            pathname === "/admin-dashboard" ? "text-lime-500" : ""
+            pathname === "/user-dashboard"
+              ? "text-orange-400  border-orange-600"
+              : ""
           }`}
         >
           Dashboard

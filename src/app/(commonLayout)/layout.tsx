@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Navbar from "./components/page/shared/Navbar";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/utils/authOptions";
+import Footer from "./components/page/shared/Footer";
 
 export const metadata: Metadata = {
   title: "Animal Bazaar",
@@ -13,13 +12,11 @@ export default async function dashboardLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await getServerSession(authOptions);
-
   return (
     <div>
-      <Navbar session={session} />
+      <Navbar />
       {children}
-      <footer />
+      <Footer />
     </div>
   );
 }

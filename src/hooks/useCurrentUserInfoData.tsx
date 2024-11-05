@@ -4,14 +4,18 @@ import { TUser } from "../types/gobal";
 
 const useCurrentUserData = () => {
   const { user } = useCurrentUserInfo();
-  const { data: usersData, isLoading: isUserLoading } = useGetUsersQuery({});
+  const {
+    data: usersData,
+    isLoading: isUserLoading,
+    refetch,
+  } = useGetUsersQuery({});
   const users = usersData?.data?.result || [];
 
   const currentUserInfo = user
     ? users.find((u: TUser) => u.email === user.email)
     : null;
 
-  return { currentUserInfo, isUserLoading };
+  return { currentUserInfo, isUserLoading, refetch };
 };
 
 export default useCurrentUserData;
