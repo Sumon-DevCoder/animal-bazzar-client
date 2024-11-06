@@ -1,6 +1,9 @@
+"use client";
+
 import React from "react";
 import heroImg from "../../../../../../public/assets/banner_img.jpg";
 import PrimaryButton from "@/app/components/PrimaryButton";
+import { motion } from "framer-motion";
 
 const Banner = () => {
   return (
@@ -14,23 +17,30 @@ const Banner = () => {
 
         {/* Animated content */}
         <div className="relative flex flex-col items-center justify-center h-full text-white text-center p-4 space-y-4">
-          <h1
-            data-aos="fade-down"
+          <motion.h1
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
             className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-wider mb-2"
           >
             Discover the World of Animals at <br /> Your Fingertips
-          </h1>
+          </motion.h1>
 
-          <p
-            data-aos="fade-up"
-            data-aos-delay="200"
+          <motion.p
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.2 }}
             className="text-lg md:text-2xl mb-6 max-w-2xl mx-auto"
           >
             Find everything you need for your pets and animal companions, from
             food to accessories, all in one place.
-          </p>
+          </motion.p>
 
-          <div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 0.4 }}
+          >
             <PrimaryButton
               name="BUY NOW"
               path="/"
@@ -51,7 +61,7 @@ const Banner = () => {
                 </svg>
               }
             />
-          </div>
+          </motion.div>
         </div>
       </div>
     </div>

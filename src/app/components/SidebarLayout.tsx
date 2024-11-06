@@ -22,32 +22,33 @@ const AdminSidebar = () => {
 
   const links = isAdmin
     ? [
-        { name: "Dashboard", path: "/admin-dashboard" },
+        { name: "📊 Dashboard", path: "/admin-dashboard" },
         {
-          name: "Products",
+          name: "📦 Products",
           subLinks: [
-            { name: "Create Product", path: "/admin-dashboard/create-product" },
-            { name: "Product List", path: "/admin-dashboard/product-list" },
+            {
+              name: "➕ Create Product",
+              path: "/admin-dashboard/create-product",
+            },
+            { name: "📋 Product List", path: "/admin-dashboard/product-list" },
           ],
         },
-        { name: "Orders", path: "/admin-dashboard/order-management" },
-        { name: "UserManagement", path: "/admin-dashboard/user-management" },
-        { name: "Settings", path: "/admin/settings" },
+        { name: "📦 Orders", path: "/admin-dashboard/order-management" },
+        { name: "👥 Users", path: "/admin-dashboard/user-management" },
+        { name: "⚙️ Settings", path: "/admin-dashboard/setting" },
       ]
     : [
-        { name: "Dashboard", path: "/user/dashboard" },
-        { name: "My Bookings", path: "/user/my-bookings" },
-        { name: "Orders", path: "/user/orders" },
-        { name: "Users", path: "/user/users" },
-        { name: "Settings", path: "/user/settings" },
+        { name: "📊 Dashboard", path: "/dashboard" },
+        { name: "👤 Profile", path: "/dashboard/profile" },
+        { name: "📅 Order History", path: "/dashboard/order-history" },
       ];
 
   const generalLinks = [
-    { name: "Home", path: "/" },
-    { name: "About", path: "/about" },
-    { name: "Product", path: "/product" },
-    { name: "Contact", path: "/contact" },
-    { name: "Cart", path: "/cart" },
+    { name: "🏠 Home", path: "/" },
+    { name: "📦 About", path: "/about" },
+    { name: "🛍️ Product", path: "/product" },
+    { name: "📞 Contact", path: "/contact" },
+    { name: "🛒 Cart", path: "/cart" },
   ];
 
   // Helper function to handle link click
@@ -170,7 +171,7 @@ const AdminSidebar = () => {
             onClick={handleLogout}
             className="w-full px-4 py-2 text-left text-red-500 hover:bg-gray-700 transition-colors duration-200"
           >
-            Logout
+            🚪 Logout
           </button>
         </div>
       </aside>

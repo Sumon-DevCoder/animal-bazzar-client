@@ -8,15 +8,18 @@ import Image from "next/image";
 import useCurrentUserInfo from "../../../../hooks/useCurrentUserInfo";
 import { TError } from "@/types/gobal.js";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const ProductDetailsPage = () => {
   const { id } = useParams();
   const { data } = useGetSingleProductQuery(id);
   const { user } = useCurrentUserInfo();
+  const router = useRouter();
 
   const [createCart] = useCreateCartMutation();
 
-  const { name, price, image, description, _id } = data?.data || {};
+  const { name, price, image, description, _id, category, stockQuantity } =
+    data?.data || {};
 
   const handleAddCart = async (productId: string) => {
     if (user && user?.email) {
@@ -34,6 +37,7 @@ const ProductDetailsPage = () => {
 
         if (res) {
           toast.success("Cart added successfully");
+          router.push("/cart");
         }
       } catch (err) {
         const serverMsgErr =
@@ -44,31 +48,53 @@ const ProductDetailsPage = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-purple-100 to-indigo-200 p-4">
-      <div className="max-w-md w-full bg-white rounded-xl shadow-2xl overflow-hidden transform transition duration-500 hover:scale-105">
+    <div className="flex justify-center items-center  min-h-screen bg-gradient-to-br from-purple-100 to-indigo-200 p-6 py-20">
+      <div className="max-w-3xl w-full bg-white rounded-3xl shadow-2xl overflow-hidden transform transition duration-500 hover:scale-105">
         <div className="relative">
           <Image
-            className="w-full h-64 object-cover"
+            className="w-full h-72 object-cover rounded-t-3xl"
             src={image}
             alt={name}
-            width={500} // Set a suitable width
-            height={400} // Set a suitable height
-            layout="responsive" // Ensures the image is responsive
+            width={500}
+            height={400}
+            layout="responsive"
           />
-          <div className="absolute top-0 right-0 bg-teal-500 text-white px-2 py-1 m-2 rounded-md text-sm font-semibold">
+          <div className="absolute top-3 left-3 bg-teal-500 text-white px-3 py-1 rounded-full text-xs font-semibold">
             Featured
           </div>
         </div>
-        <div className="p-6">
-          <h2 className="text-2xl font-bold mb-2 text-gray-800">{name}</h2>
-          <p className="text-gray-600 mb-4">{description}</p>
-          <div className="flex justify-between items-center mb-4">
-            <span className="text-2xl font-bold text-gray-800">${price}</span>
+
+        <div className="p-8">
+          <h2 className="text-3xl font-semibold text-gray-800 mb-3">{name}</h2>
+          <p className="text-lg text-gray-600 mb-5">{description}</p>
+
+          <div className="flex justify-between items-center mb-6">
+            <div className="flex flex-col">
+              <span className="text-lg text-gray-500">Category</span>
+              <span className="text-xl font-medium text-gray-800">
+                {category}
+              </span>
+            </div>
+            <div className="flex flex-col items-end">
+              <span className="text-lg text-gray-500">Price</span>
+              <span className="text-2xl font-semibold text-indigo-700">
+                ${price}
+              </span>
+            </div>
+          </div>
+
+          <div className="flex justify-between items-center mb-6">
+            <div className="flex flex-col">
+              <span className="text-lg text-gray-500">Stock</span>
+              <span className="text-xl font-medium text-gray-800">
+                {stockQuantity} left
+              </span>
+            </div>
             <button
               onClick={() => handleAddCart(_id)}
-              className="px-4 py-2 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-75 transition duration-300 ease-in-out"
+              className="px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-75 transition duration-300 ease-in-out"
             >
-              Book Now
+              Add To Cart
             </button>
           </div>
         </div>

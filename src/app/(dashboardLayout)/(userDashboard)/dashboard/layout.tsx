@@ -1,3 +1,4 @@
+import SidebarLayout from "@/app/components/SidebarLayout";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -11,9 +12,11 @@ export default function UserDashboardLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div>
-      user dashboard sidebar
-      {children}
+    <div className="flex min-h-screen">
+      <div className="bg-gray-800">
+        <SidebarLayout />
+      </div>
+      <div className="flex-grow p-2">{children}</div>
     </div>
   );
 }

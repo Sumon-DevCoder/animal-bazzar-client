@@ -1,27 +1,33 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useGetCartByUserQuery } from "@/redux/features/cart/cartApi"; // Assuming you have a cart API
+import {
+  useGetCartByUserQuery,
+  useDeleteCartByIdMutation,
+} from "@/redux/features/cart/cartApi"; // Assuming you have a cart API
 import useCurrentUserInfo from "../../../hooks/useCurrentUserInfo";
-import { TCart } from "@/types/gobal";
+import { TCart, TError } from "@/types/gobal";
 import useCurrentUserData from "@/hooks/useCurrentUserInfoData";
 import { useCreateorderMutation } from "@/redux/features/order/orderApi";
+import Swal from "sweetalert2";
+import { toast } from "sonner";
+import { useEffect } from "react";
 
 const MyCart = () => {
   const { user } = useCurrentUserInfo();
   const { currentUserInfo } = useCurrentUserData();
-  const { data } = useGetCartByUserQuery(user?.email);
+  const { data, refetch } = useGetCartByUserQuery(user?.email);
   const [createOrder] = useCreateorderMutation();
+  const [deleteCartById] = useDeleteCartByIdMutation();
   const cartItems = data?.data || [];
+
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
 
   const handleOrder = async () => {
     const orderInfo = {
       user: currentUserInfo,
-      // products: cartItems.map((item: { _id: any; quantity: any }) => ({
-      //   product: item._id,
-      //   quantity: item.quantity,
-      // })),
-
       products: cartItems,
     };
 
@@ -38,46 +44,68 @@ const MyCart = () => {
     }
   };
 
-  // const paymentDatas = paymentData?.data || [];
+  const handleDeleteItem = (itemId: string) => {
+    Swal.fire({
+      title: "Confirm Deletion",
+      text: `Are you sure you want to delete ?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Delete",
+      cancelButtonText: "Cancel",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const toastId = toast.loading("Deleting the product...");
 
-  // const handlePayment = async (cartItem: TCartItem) => {
-  //   try {
-  //     const response = await fetch(
-  //       "http://localhost:5001/api/payment/initiate",
-  //       {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify({ amount: cartItem.price, currency: "BDT" }), // Use cartItem.price
-  //       }
-  //     );
+        try {
+          const res = await deleteCartById(itemId).unwrap();
 
-  //     if (!response.ok) {
-  //       const errorData = await response.json();
-  //       console.error("Error initiating payment:", errorData);
-  //       alert("Payment initiation failed. Please try again.");
-  //       return;
-  //     }
+          if (res && res.message) {
+            toast.success(res.message, { id: toastId, duration: 3000 });
+            refetch();
+          } else {
+            toast.error("Unexpected response received.", {
+              id: toastId,
+              duration: 3000,
+            });
+          }
+        } catch (err) {
+          const serverMsgErr =
+            (err as TError)?.data?.message ||
+            "An error occurred while deleting the product. Please try again.";
 
-  //     const data = await response.json();
-  //     console.log("data", data);
+          toast.error(serverMsgErr, {
+            id: toastId,
+            duration: 3000,
+          });
+        }
+      }
+    });
+  };
 
-  //     if (data.url) {
-  //       window.location.href = data.url;
-  //     } else {
-  //       console.error("Payment URL not found in response.");
-  //       alert("Payment initiation failed. No URL returned.");
-  //     }
-  //   } catch (error) {
-  //     console.error("Unexpected error:", error);
-  //     alert("An unexpected error occurred. Please try again.");
-  //   }
-  // };
+  const calculateSubtotal = () => {
+    return cartItems.reduce(
+      (total: any, item: { price: any }) => total + item.price,
+      0
+    );
+  };
+
+  const calculateTotal = () => {
+    const subtotal = calculateSubtotal();
+    // Add logic for tax, shipping, or discounts if applicable
+    const shippingCost = 20; // Example shipping cost
+    const total = subtotal + shippingCost;
+    return total;
+  };
 
   return (
-    <div>
-      <div>
+    <div className="p-5 space-y-6 md:space-y-0 flex justify-center items-center lg:items-start  flex-col lg:justify-between lg:px-48  lg:flex-row gap-y-5 justify-items-center md:space-x-6">
+      {/* Left side: Cart Items */}
+      <div className="flex-1">
+        <h2 className="text-center text-black mb-4 text-xl font-bold">
+          My Cart
+        </h2>
         <table className="min-w-full divide-y divide-gray-200 overflow-x-auto">
           <thead className="bg-gray-50">
             <tr>
@@ -87,52 +115,58 @@ const MyCart = () => {
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Price
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Order status
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Payment status
-              </th>
 
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                action
+                Action
               </th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {cartItems?.map((cartItem: TCart) => (
               <tr key={cartItem?._id}>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm font-medium text-gray-900">
-                    {cartItem.productName} {/* Assuming productName exists */}
-                  </div>
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                  {cartItem.productName}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm font-medium text-gray-900">
-                    ${cartItem.price} {/* Assuming productName exists */}
-                  </div>
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                  ${cartItem.price}
                 </td>
+
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm font-medium text-gray-900">
-                    {cartItem.isConfirmed}
-                  </div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-500">
-                    {cartItem.paymentStatus}
-                  </div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <button className="btn">Pay</button>
+                  <button
+                    className="text-red-500 hover:text-red-700 btn btn-sm"
+                    onClick={() => handleDeleteItem(cartItem._id)}
+                  >
+                    Remove
+                  </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      <div>
-        <button className="btn" onClick={handleOrder}>
-          Pay Tk poisa
+
+      {/* Right side: Order Summary */}
+      <div className="w-full md:w-1/3 bg-white p-6 rounded-lg shadow">
+        <h3 className="text-xl font-semibold text-gray-800 mb-4">
+          Order Summary
+        </h3>
+        <div className="mb-4">
+          <p className="text-gray-600">
+            Subtotal: ${calculateSubtotal().toFixed(2)}
+          </p>
+          <p className="text-gray-600">Shipping: $20.00</p>
+        </div>
+        <div className="border-t border-gray-300 my-4"></div>
+        <div className="mb-4">
+          <p className="text-lg font-semibold text-gray-800">
+            Total: ${calculateTotal().toFixed(2)}
+          </p>
+        </div>
+        <button
+          className="w-full bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600"
+          onClick={handleOrder}
+        >
+          Proceed to Payment
         </button>
       </div>
     </div>

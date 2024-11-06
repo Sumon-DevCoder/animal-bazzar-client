@@ -74,7 +74,7 @@ const DropDownProfile = () => {
                 </Link>
               ) : (
                 <Link
-                  href="/profile"
+                  href="/dashboard/user-profile"
                   className="flex items-center px-4 py-2 text-gray-800 hover:bg-gray-100"
                 >
                   <AiFillProfile className="mr-2" />

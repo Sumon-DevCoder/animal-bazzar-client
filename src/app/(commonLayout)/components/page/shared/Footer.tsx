@@ -89,7 +89,7 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-3">Quick Links</h3>
             <ul className="text-white/80 text-sm space-y-2">
               <li>
-                <Link href="/about-us" className="hover:underline">
+                <Link href="/about" className="hover:underline">
                   About Us
                 </Link>
               </li>
@@ -99,7 +99,7 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/terms" className="hover:underline">
+                <Link href="/term-service" className="hover:underline">
                   Terms of Service
                 </Link>
               </li>

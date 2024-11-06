@@ -71,13 +71,13 @@ const ProductList = ({ productsData }: ProductListProps) => {
           placeholder="Search products..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="border p-2 rounded-md w-full md:w-1/2 focus:outline-none focus:ring-2 focus:ring-green-400"
+          className="border p-2 rounded-md w-full md:w-1/2 focus:outline-none focus:ring-2 focus:ring-green-400 text-black transition-all duration-300 ease-in-out"
         />
 
         <select
           value={selectedCategory}
           onChange={(e) => setSelectedCategory(e.target.value)}
-          className="border p-2 rounded-md w-full md:w-1/2 focus:outline-none focus:ring-2 focus:ring-green-400"
+          className="border p-2 rounded-md w-full md:w-1/2 focus:outline-none focus:ring-2 focus:ring-green-400 text-black transition-all duration-300 ease-in-out"
         >
           {categories.map((category) => (
             <option key={category} value={category}>
@@ -97,24 +97,29 @@ const ProductList = ({ productsData }: ProductListProps) => {
           {currentProducts.map((product) => (
             <div
               key={product._id}
-              className="border border-gray-300 p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+              className="border border-gray-200 bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 ease-in-out transform hover:-translate-y-2 hover:scale-105"
             >
               <Image
                 src={product.image}
                 alt={product.name}
                 height={500}
                 width={500}
-                className="w-full h-48 object-cover rounded-md mb-4"
+                className="w-full h-56 object-cover rounded-lg mb-4 transition-all duration-300 ease-in-out transform hover:scale-105"
               />
-              <h2 className="text-lg font-semibold text-gray-800 mb-2">
+              <h2 className="text-xl font-bold text-gray-800 mb-2">
                 {product.name}
               </h2>
-              <p className="text-gray-500 mb-1">Category: {product.category}</p>
-              <p className="text-green-600 font-bold text-lg">
+              <p className="text-sm text-gray-600 mb-1">
+                Category:{" "}
+                <span className="text-gray-800">{product.category}</span>
+              </p>
+              <p className="text-green-700 font-bold text-lg">
                 ${product.price}
               </p>
-              <Link href={`/product/${product?._id}`} className="btn">
-                Details
+              <Link href={`/product/${product._id}`}>
+                <button className="mt-4 w-full py-2 bg-green-600 text-white rounded-lg shadow-md hover:bg-green-700 focus:ring-2 focus:ring-green-500 focus:outline-none transition duration-200 transform hover:scale-105">
+                  View Details
+                </button>
               </Link>
             </div>
           ))}
@@ -126,7 +131,7 @@ const ProductList = ({ productsData }: ProductListProps) => {
         <button
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           disabled={currentPage === 1}
-          className="px-4 py-2 bg-gray-300 rounded-lg text-gray-700 hover:bg-gray-400 transition-colors duration-200 disabled:opacity-50"
+          className="px-4 py-2 bg-gray-300 rounded-lg text-gray-700 hover:bg-gray-400 transition-colors duration-200 disabled:opacity-50 transform hover:scale-105"
         >
           <FaArrowLeft />
         </button>
@@ -138,7 +143,7 @@ const ProductList = ({ productsData }: ProductListProps) => {
             setCurrentPage((prev) => Math.min(prev + 1, totalPages))
           }
           disabled={currentPage === totalPages}
-          className="px-4 py-2 bg-gray-300 rounded-lg text-gray-700 hover:bg-gray-400 transition-colors duration-200 disabled:opacity-50"
+          className="px-4 py-2 bg-gray-300 rounded-lg text-gray-700 hover:bg-gray-400 transition-colors duration-200 disabled:opacity-50 transform hover:scale-105"
         >
           <FaArrowRight />
         </button>

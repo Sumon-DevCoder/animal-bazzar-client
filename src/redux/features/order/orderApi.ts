@@ -23,7 +23,7 @@ export const orderApi = baseApi.injectEndpoints({
         console.log("api hitting", email);
         return {
           method: "GET",
-          url: `/orders/user/${email}`,
+          url: `/orders/${email}`,
         };
       },
     }),

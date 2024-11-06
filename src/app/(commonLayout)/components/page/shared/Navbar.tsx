@@ -59,6 +59,14 @@ const Navbar = () => {
       >
         Carts
       </Link>
+      <Link
+        href="/dashboard/order-history"
+        className={`p-2 rounded-lg text-slate-200 ${
+          pathname === "/about" ? "text-orange-400  border-orange-600" : ""
+        }`}
+      >
+        Order History
+      </Link>
       {isAdmin && (
         <Link
           href="/admin-dashboard"
@@ -73,9 +81,9 @@ const Navbar = () => {
       )}
       {isVerifiedUser && (
         <Link
-          href="/user-dashboard"
+          href="/dashboard"
           className={`p-2 rounded-lg text-slate-200 ${
-            pathname === "/user-dashboard"
+            pathname === "/dashboard"
               ? "text-orange-400  border-orange-600"
               : ""
           }`}

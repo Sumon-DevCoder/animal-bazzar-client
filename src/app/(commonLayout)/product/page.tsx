@@ -27,8 +27,10 @@ const ProductPage = async () => {
   const products = res?.data?.data?.result || [];
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Products</h1>
+    <div className="p-6 ">
+      <h1 className="text-xl lg:text-3xl font-bold mb-5 text-center text-black">
+        Featured Products
+      </h1>
       <ProductList productsData={products} />
     </div>
   );

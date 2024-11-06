@@ -70,4 +70,18 @@ export type TCart = {
   isDeleted: boolean;
 };
 
+export type TOrder = {
+  _id: string;
+  user: {
+    name: string;
+    email: string;
+    phone: string;
+    address: string;
+  };
+  totalPrice: number;
+  status: string;
+  paymentStatus: string;
+  transactionId: string;
+};
+
 export type TResponseRedux<T> = TResponse<T>;
