@@ -11,6 +11,7 @@ import { toast } from "sonner";
 import { useAppDispatch } from "@/redux/hooks";
 import useCurrentUserInfo from "@/hooks/useCurrentUserInfo";
 import { MdDashboard } from "react-icons/md";
+import { AiFillProfile } from "react-icons/ai";
 
 const DropDownProfile = () => {
   const { currentUserInfo: user, refetch } = useCurrentUserData();
@@ -76,7 +77,7 @@ const DropDownProfile = () => {
                   href="/profile"
                   className="flex items-center px-4 py-2 text-gray-800 hover:bg-gray-100"
                 >
-                  <FaUserCircle className="mr-2" />
+                  <AiFillProfile className="mr-2" />
                   Profile
                 </Link>
               )}

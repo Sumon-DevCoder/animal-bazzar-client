@@ -22,8 +22,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ReduxProvider>{children}</ReduxProvider>
-        {/* <div>{children}</div> */}
+        <div className="bg-slate-200">
+          <ReduxProvider>{children}</ReduxProvider>
+        </div>
       </body>
     </html>
   );

@@ -70,21 +70,21 @@ const UserManagement = () => {
     <table className="min-w-full divide-y divide-gray-200 overflow-x-auto">
       <thead className="bg-gray-500">
         <tr>
-          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+          <th className="px-6 py-3 text-left text-xs font-medium text-gray-100 uppercase">
             Name
           </th>
-          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+          <th className="px-6 py-3 text-left text-xs font-medium text-gray-100 uppercase">
             Email
           </th>
-          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+          <th className="px-6 py-3 text-left text-xs font-medium text-gray-100 uppercase">
             Role
           </th>
-          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+          <th className="px-6 py-3 text-xs font-medium text-gray-100 uppercase text-start">
             Actions
           </th>
         </tr>
       </thead>
-      <tbody className="bg-gray-400 divide-y divide-gray-200">
+      <tbody className="bg-gray-600 divide-y divide-gray-200">
         {users.map((user: TUser) => (
           <tr key={user._id}>
             <td className="px-6 py-4 whitespace-nowrap">{user.name}</td>
@@ -92,7 +92,7 @@ const UserManagement = () => {
             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
               <span
                 className={
-                  user.role === "user" ? "text-green-600" : "text-blue-600"
+                  user.role === "user" ? "text-green-400 " : "text-blue-400"
                 }
               >
                 {user.role}
@@ -102,7 +102,7 @@ const UserManagement = () => {
               {user.role === "user" ? (
                 <button
                   onClick={() => handleRoleChange(user?._id, "admin")}
-                  className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded"
+                  className="bg-green-600 hover:bg-green-700 text-white font-bold py-1 px-3 rounded"
                 >
                   Make Admin
                 </button>

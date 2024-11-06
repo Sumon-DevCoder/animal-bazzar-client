@@ -1,19 +1,25 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import Link from "next/link";
 import Image from "next/image";
 import logoImg from "../../../public/assets/animal_logo.jpg";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { FaChevronDown, FaChevronUp, FaBars, FaTimes } from "react-icons/fa";
 import useCurrentUserInfo from "../../hooks/useCurrentUserInfo";
+import { useDispatch } from "react-redux";
+import { toast } from "sonner";
+import { logout } from "@/redux/features/auth/authSlice";
 
 const AdminSidebar = () => {
   const pathname = usePathname();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const dispatch = useDispatch();
 
   const { isAdmin } = useCurrentUserInfo();
 
-  // Define links outside the conditional block
   const links = isAdmin
     ? [
         { name: "Dashboard", path: "/admin-dashboard" },
@@ -24,7 +30,7 @@ const AdminSidebar = () => {
             { name: "Product List", path: "/admin-dashboard/product-list" },
           ],
         },
-        { name: "Orders", path: "/admin/orders" },
+        { name: "Orders", path: "/admin-dashboard/order-management" },
         { name: "UserManagement", path: "/admin-dashboard/user-management" },
         { name: "Settings", path: "/admin/settings" },
       ]
@@ -36,13 +42,48 @@ const AdminSidebar = () => {
         { name: "Settings", path: "/user/settings" },
       ];
 
+  const generalLinks = [
+    { name: "Home", path: "/" },
+    { name: "About", path: "/about" },
+    { name: "Product", path: "/product" },
+    { name: "Contact", path: "/contact" },
+    { name: "Cart", path: "/cart" },
+  ];
+
+  // Helper function to handle link click
+  const handleLinkClick = () => {
+    setIsSidebarOpen(false); // Close sidebar after link click on small screens
+  };
+
+  const handleLogout = async () => {
+    try {
+      await dispatch(logout());
+      toast.success("Logout Successful");
+    } catch (err: any) {
+      toast.error("Logout Failed. Please try again.");
+    }
+  };
   return (
-    <div className="sticky top-0 z-10 ">
-      <aside className="w-64 bg-gray-800 text-white shadow-md h-[100vh]">
+    <div className="lg:sticky lg:top-0 lg:z-10">
+      {/* Toggle Button for Small Screens */}
+      <button
+        className="lg:hidden flex items-center p-4 text-white bg-gray-800"
+        onClick={() => setIsSidebarOpen((prev) => !prev)}
+      >
+        {isSidebarOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+      </button>
+
+      {/* Sidebar */}
+      <aside
+        className={`fixed lg:relative top-0 left-0 w-64 bg-gray-800 text-white shadow-md h-full transform transition-transform duration-300 ${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } lg:translate-x-0 lg:block`}
+      >
         <div className="p-2 text-lg font-bold border-b border-gray-700 flex">
           <Link
             href={`/`}
-            className="btn btn-ghost text-lg md:text-xl bg-gradient-href-r from-slate-200"
+            className="btn btn-ghost text-lg md:text-xl bg-gradient-href-r from-slate-200 flex items-center"
+            onClick={handleLinkClick} // Close sidebar on link click
           >
             <Image className="h-7 w-7" src={logoImg} alt="Animal Bazaar Logo" />
             <span className="text-2xl mt-1">Animal Bazaar</span>
@@ -77,6 +118,7 @@ const AdminSidebar = () => {
                             className={`block px-4 py-2 hover:bg-gray-700 transition-colors duration-200 ${
                               pathname === subLink.path ? "bg-gray-700" : ""
                             }`}
+                            onClick={handleLinkClick} // Close sidebar on sub-link click
                           >
                             {subLink.name}
                           </Link>
@@ -90,6 +132,7 @@ const AdminSidebar = () => {
                     className={`block px-4 py-2 hover:bg-gray-700 transition-colors duration-200 ${
                       pathname === link.path ? "bg-gray-700" : ""
                     }`}
+                    onClick={handleLinkClick} // Close sidebar on link click
                   >
                     {link.name}
                   </Link>
@@ -98,6 +141,38 @@ const AdminSidebar = () => {
             ))}
           </ul>
         </nav>
+
+        {/* General Links Section with Borders */}
+        <div className="border-t border-gray-500 mt-4 pt-2">
+          <ul>
+            {generalLinks.map((link, index) => (
+              <li
+                key={link.name}
+                className={`${index > 0 ? "border-t border-gray-700" : ""}`}
+              >
+                <Link
+                  href={link.path}
+                  className={`block px-4 py-2 hover:bg-gray-700 transition-colors duration-200 ${
+                    pathname === link.path ? "bg-gray-700" : ""
+                  }`}
+                  onClick={handleLinkClick} // Close sidebar on link click
+                >
+                  {link.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Logout Button */}
+        <div className="mt-auto border-t border-gray-500 py-4 px-4">
+          <button
+            onClick={handleLogout}
+            className="w-full px-4 py-2 text-left text-red-500 hover:bg-gray-700 transition-colors duration-200"
+          >
+            Logout
+          </button>
+        </div>
       </aside>
     </div>
   );

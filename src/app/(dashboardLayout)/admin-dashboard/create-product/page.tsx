@@ -1,12 +1,14 @@
 "use client";
 
 import { useCreateProductMutation } from "@/redux/features/product/productApi";
+import { useRouter } from "next/navigation";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { FieldValues, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 const CreateProduct = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -70,6 +72,7 @@ const CreateProduct = () => {
       if (res) {
         toast.success(res?.message, { id: toastId, duration: 3000 });
         reset();
+        router.push("/admin-dashboard/product-list");
       }
 
       console.log(res);
