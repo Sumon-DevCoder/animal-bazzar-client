@@ -9,7 +9,6 @@ import { FieldValues, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
 import { HiEye, HiEyeOff } from "react-icons/hi";
-import { motion } from "framer-motion"; // Import Framer Motion
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { TError } from "@/types/gobal";
 import Link from "next/link";
@@ -40,7 +39,6 @@ const Login = () => {
       const res = await login(userInfo).unwrap();
 
       // redirect path
-      // const from = location.state?.from?.pathname || "/";
       const from = searchParams.get("from") || "/";
 
       console.log("pathname", from);
@@ -77,13 +75,7 @@ const Login = () => {
     <div className="mx-auto">
       <div className="flex justify-center px-6 py-12">
         <div className="w-full xl:w-3/4 lg:w-11/12 flex justify-center">
-          <motion.div
-            className="w-full lg:w-7/12 shadow-xl bg-gray-100 dark:bg-gray-700 p-5 rounded-lg lg:rounded-l-none"
-            initial={{ opacity: 0, y: -20 }} // Initial state
-            animate={{ opacity: 1, y: 0 }} // Animate to this state
-            exit={{ opacity: 0, y: 20 }} // Exit state
-            transition={{ duration: 0.5 }} // Duration of the animation
-          >
+          <div className="w-full lg:w-7/12 shadow-xl bg-gray-100 dark:bg-gray-700 p-5 rounded-lg lg:rounded-l-none">
             <h3 className="py-4 text-2xl text-center text-gray-800 dark:text-white">
               Login to Your Account
             </h3>
@@ -141,7 +133,7 @@ const Login = () => {
                   />
                   <button
                     type="button"
-                    onClick={() => setShowPassword(!showPassword)} // Toggle the state
+                    onClick={() => setShowPassword(!showPassword)}
                     className="absolute top-2 right-0 flex items-center px-3 text-gray-500 focus:outline-none"
                   >
                     {showPassword ? (
@@ -172,14 +164,14 @@ const Login = () => {
                   Don&apos;t have an account?{" "}
                   <Link
                     className="font-semibold text-indigo-500 underline"
-                    href={"/register"} // Link to your registration page
+                    href={"/register"}
                   >
                     Register
                   </Link>
                 </p>
               </div>
             </form>
-          </motion.div>
+          </div>
         </div>
       </div>
     </div>

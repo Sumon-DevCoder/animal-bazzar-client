@@ -13,7 +13,7 @@ export default function AdminDashboardLayout({
 }>) {
   return (
     <div className="flex min-h-screen">
-      <div>
+      <div className="bg-gray-800">
         <SidebarLayout />
       </div>
       <div className="flex-grow p-2">{children}</div>

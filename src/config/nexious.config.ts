@@ -1,7 +1,7 @@
 import { Nexios } from "nexios-http";
 
 const nexiousInstance = new Nexios({
-  baseURL: "http://localhost:5000/api",
+  baseURL: "https://animal-bazaar-server.vercel.app/api",
   timeout: 10000,
   headers: {
     "Content-Type": "application/json",

@@ -5,14 +5,13 @@ import { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { HiEye, HiEyeOff } from "react-icons/hi";
-import { motion } from "framer-motion";
 import axios from "axios";
 import { TError } from "@/types/gobal";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 const Register = () => {
-  const [signup, { isLoading }] = authApi.useSignupMutation();
+  const [signup] = authApi.useSignupMutation();
   const {
     register,
     handleSubmit,
@@ -25,7 +24,6 @@ const Register = () => {
   const onSubmit = async (data: FieldValues) => {
     const toastId = toast.loading("Processing...");
 
-    // Upload the image to ImgBB if it exists
     let imageUrl = "";
     if (userImg) {
       const formData = new FormData();
@@ -33,10 +31,10 @@ const Register = () => {
 
       try {
         const response = await axios.post(
-          `https://api.imgbb.com/1/upload?key=${"9b72c2e7f55726fd9a28bfb8bfedc08b"}`, // Replace with your ImgBB API key
+          `https://api.imgbb.com/1/upload?key=${"9b72c2e7f55726fd9a28bfb8bfedc08b"}`,
           formData
         );
-        imageUrl = response.data.data.url; // Get the image URL
+        imageUrl = response.data.data.url;
       } catch (uploadError) {
         console.error("Image upload failed:", uploadError);
         return toast.error("Image upload failed", {
@@ -46,7 +44,6 @@ const Register = () => {
       }
     }
 
-    // userInfo object
     const userInfo = {
       name: data.name,
       email: data.email,
@@ -54,14 +51,12 @@ const Register = () => {
       phone: data.phone,
       role: "user",
       address: data.address,
-      img: imageUrl, // Include image URL
+      img: imageUrl,
     };
 
     try {
-      // Call the signup mutation
       const response = await signup(userInfo).unwrap();
 
-      // Check if the signup was successful
       if (response) {
         toast.success("Registration Successful, Please Login", {
           id: toastId,
@@ -99,19 +94,9 @@ const Register = () => {
   return (
     <div>
       <div className="mx-auto">
-        <motion.div
-          className="flex justify-center px-6 py-5"
-          initial={{ opacity: 0, y: 20 }} // Start slightly below and transparent
-          animate={{ opacity: 1, y: 0 }} // Animate to original position and full opacity
-          transition={{ duration: 0.5 }} // Duration of the animation
-        >
+        <div className="flex justify-center px-6 py-5">
           <div className="w-full xl:w-3/4 lg:w-11/12 flex justify-center">
-            <motion.div
-              className="w-full lg:w-7/12 shadow-xl bg-gray-100 dark:bg-gray-700 p-5 rounded-lg lg:rounded-l-none"
-              initial={{ scale: 0.95 }} // Scale down slightly at start
-              animate={{ scale: 1 }} // Animate to full scale
-              transition={{ duration: 0.5 }}
-            >
+            <div className="w-full lg:w-7/12 shadow-xl bg-gray-100 dark:bg-gray-700 p-5 rounded-lg lg:rounded-l-none">
               <h3 className="py-4 text-2xl text-center text-gray-800 dark:text-white">
                 Create an Account!
               </h3>
@@ -252,15 +237,14 @@ const Register = () => {
                       />
                       <button
                         type="button"
-                        onClick={() => setShowPassword(!showPassword)} // Toggle the state
+                        onClick={() => setShowPassword(!showPassword)}
                         className="absolute top-2 right-0 flex items-center px-3 text-gray-500 focus:outline-none"
                       >
                         {showPassword ? (
                           <HiEyeOff className="text-xl" />
                         ) : (
                           <HiEye className="text-xl" />
-                        )}{" "}
-                        {/* Eye icon toggle */}
+                        )}
                       </button>
                     </div>
                     {errors.password && (
@@ -270,64 +254,46 @@ const Register = () => {
                     )}
                   </div>
                 </div>
-
-                {/* User Image Upload */}
                 <div className="mb-4">
-                  <label
-                    className="block mb-2 text-sm font-bold text-gray-700 dark:text-white"
-                    htmlFor="userImg"
-                  >
-                    Upload Image
+                  <label className="block mb-2 text-sm font-bold text-gray-700 dark:text-white">
+                    Profile Picture
                   </label>
                   <input
                     type="file"
                     accept="image/*"
-                    onChange={(e) => {
-                      if (e.target.files && e.target.files.length > 0) {
-                        setUserImg(e.target.files[0]); // Set the file to state
-                      }
-                    }}
-                    className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 dark:text-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                    onChange={(e) => setUserImg(e.target.files?.[0] || null)}
+                    className="w-full px-3 py-2 text-sm leading-tight text-gray-700 dark:text-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                   />
                 </div>
-
                 <div className="mb-6 text-center">
                   <button
-                    className={`w-full px-4 py-2 font-semibold text-white ${
-                      isLoading
-                        ? "bg-gray-400"
-                        : "bg-blue-500 hover:bg-blue-700"
-                    } rounded-full focus:outline-none focus:shadow-outline`}
                     type="submit"
-                    disabled={isLoading}
+                    className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline"
                   >
-                    {isLoading ? "Registering..." : "Register"}
+                    Register Account
                   </button>
                 </div>
                 <hr className="mb-6 border-t" />
                 <div className="text-center">
-                  {/* <a
-                  className="inline-block text-sm text-blue-500 dark:text-blue-500 align-baseline hover:text-blue-800"
-                  href="#"
-                >
-                  Forgot Password?
-                </a> */}
+                  <Link
+                    href="#"
+                    className="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800"
+                  >
+                    Forgot Password?
+                  </Link>
                 </div>
                 <div className="text-center">
-                  <p className="inline-block text-md text-black dark:text-blue-500 align-baseline ">
-                    Already have an account?{" "}
-                    <Link
-                      className="font-semibold text-indigo-500 underline"
-                      href={"/login"}
-                    >
-                      Login
-                    </Link>
-                  </p>
+                  <Link
+                    href="/login"
+                    className="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800"
+                  >
+                    Already have an account? Login!
+                  </Link>
                 </div>
               </form>
-            </motion.div>
+            </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </div>
   );

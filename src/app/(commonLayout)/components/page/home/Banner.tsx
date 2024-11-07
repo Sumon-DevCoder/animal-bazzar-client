@@ -3,7 +3,6 @@
 import React from "react";
 import heroImg from "../../../../../../public/assets/banner_img.jpg";
 import PrimaryButton from "@/app/components/PrimaryButton";
-import { motion } from "framer-motion";
 
 const Banner = () => {
   return (
@@ -15,32 +14,18 @@ const Banner = () => {
         {/* Background overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-green-900 to-green-700 opacity-70"></div>
 
-        {/* Animated content */}
+        {/* Static content */}
         <div className="relative flex flex-col items-center justify-center h-full text-white text-center p-4 space-y-4">
-          <motion.h1
-            initial={{ opacity: 0, y: -50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-wider mb-2"
-          >
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-wider mb-2">
             Discover the World of Animals at <br /> Your Fingertips
-          </motion.h1>
+          </h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.2 }}
-            className="text-lg md:text-2xl mb-6 max-w-2xl mx-auto"
-          >
+          <p className="text-lg md:text-2xl mb-6 max-w-2xl mx-auto">
             Find everything you need for your pets and animal companions, from
             food to accessories, all in one place.
-          </motion.p>
+          </p>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.4 }}
-          >
+          <div>
             <PrimaryButton
               name="BUY NOW"
               path="/"
@@ -61,7 +46,7 @@ const Banner = () => {
                 </svg>
               }
             />
-          </motion.div>
+          </div>
         </div>
       </div>
     </div>
