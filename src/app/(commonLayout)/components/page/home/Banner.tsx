@@ -12,11 +12,11 @@ const Banner = () => {
         style={{ backgroundImage: `url(${heroImg.src})` }}
       >
         {/* Background overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-green-900 to-green-700 opacity-70"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-green-900 to-green-900 dark:from-gray-900 dark:to-gray-700  opacity-70"></div>
 
         {/* Static content */}
         <div className="relative flex flex-col items-center justify-center h-full text-white text-center p-4 space-y-4">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-wider mb-2">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-wider mb-2 dark:text-green-400">
             Discover the World of Animals at <br /> Your Fingertips
           </h1>
 

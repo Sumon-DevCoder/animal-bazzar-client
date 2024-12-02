@@ -63,7 +63,7 @@ const ProductList = ({ productsData }: ProductListProps) => {
   }, [filteredProducts.length, totalPages]);
 
   return (
-    <div>
+    <div className="dark:bg-gray-800 dark:text-gray-100 bg-gray-50 text-gray-800 min-h-screen transition-all duration-300">
       {/* Search and Filter Row */}
       <div className="flex flex-col md:flex-row gap-4 mb-6">
         <input
@@ -71,13 +71,13 @@ const ProductList = ({ productsData }: ProductListProps) => {
           placeholder="Search products..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="border p-2 rounded-md w-full md:w-1/2 focus:outline-none focus:ring-2 focus:ring-green-400 text-black transition-all duration-300 ease-in-out"
+          className="border p-2 rounded-md w-full md:w-1/2 focus:outline-none focus:ring-2 focus:ring-green-400 dark:ring-gray-400 dark:text-white dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 text-black transition-all duration-300 ease-in-out"
         />
 
         <select
           value={selectedCategory}
           onChange={(e) => setSelectedCategory(e.target.value)}
-          className="border p-2 rounded-md w-full md:w-1/2 focus:outline-none focus:ring-2 focus:ring-green-400 text-black transition-all duration-300 ease-in-out"
+          className="border p-2 rounded-md w-full md:w-1/2 focus:outline-none dark:text-white focus:ring-2 focus:ring-green-400 dark:ring-gray-400 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 text-black transition-all duration-300 ease-in-out"
         >
           {categories.map((category) => (
             <option key={category} value={category}>
@@ -97,7 +97,7 @@ const ProductList = ({ productsData }: ProductListProps) => {
           {currentProducts.map((product) => (
             <div
               key={product._id}
-              className="border border-gray-200 bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 ease-in-out transform hover:-translate-y-2 hover:scale-105"
+              className="border dark:border-gray-700 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 ease-in-out transform hover:-translate-y-2 hover:scale-105"
             >
               <Image
                 src={product.image}
@@ -106,14 +106,16 @@ const ProductList = ({ productsData }: ProductListProps) => {
                 width={500}
                 className="w-full h-56 object-cover rounded-lg mb-4 transition-all duration-300 ease-in-out transform hover:scale-105"
               />
-              <h2 className="text-xl font-bold text-gray-800 mb-2">
+              <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-2">
                 {product.name}
               </h2>
-              <p className="text-sm text-gray-600 mb-1">
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">
                 Category:{" "}
-                <span className="text-gray-800">{product.category}</span>
+                <span className="text-gray-800 dark:text-gray-200">
+                  {product.category}
+                </span>
               </p>
-              <p className="text-green-700 font-bold text-lg">
+              <p className="text-green-700 dark:text-green-400 font-bold text-lg">
                 ${product.price}
               </p>
               <Link href={`/product/${product._id}`}>
@@ -131,11 +133,11 @@ const ProductList = ({ productsData }: ProductListProps) => {
         <button
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           disabled={currentPage === 1}
-          className="px-4 py-2 bg-gray-300 rounded-lg text-gray-700 hover:bg-gray-400 transition-colors duration-200 disabled:opacity-50 transform hover:scale-105"
+          className="px-4 py-2 bg-gray-300 dark:bg-gray-700 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-400 dark:hover:bg-gray-600 transition-colors duration-200 disabled:opacity-50 transform hover:scale-105"
         >
           <FaArrowLeft />
         </button>
-        <span className="text-gray-700">
+        <span className="text-gray-700 dark:text-gray-300">
           Page {currentPage} of {totalPages}
         </span>
         <button
@@ -143,7 +145,7 @@ const ProductList = ({ productsData }: ProductListProps) => {
             setCurrentPage((prev) => Math.min(prev + 1, totalPages))
           }
           disabled={currentPage === totalPages}
-          className="px-4 py-2 bg-gray-300 rounded-lg text-gray-700 hover:bg-gray-400 transition-colors duration-200 disabled:opacity-50 transform hover:scale-105"
+          className="px-4 py-2 bg-gray-300 dark:bg-gray-700 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-400 dark:hover:bg-gray-600 transition-colors duration-200 disabled:opacity-50 transform hover:scale-105"
         >
           <FaArrowRight />
         </button>

@@ -2,16 +2,20 @@ import { baseApi } from "../../api/baseApi";
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    login: builder.mutation({
-      query: (userInfo) => ({
-        url: "auth/login",
-        method: "POST",
-        body: userInfo,
-      }),
+    loginUser: builder.mutation({
+      query: (userInfo) => {
+        console.log("Attempting login with:", userInfo);
+
+        return {
+          url: "auth/login",
+          method: "POST",
+          body: userInfo,
+        };
+      },
     }),
     signup: builder.mutation({
       query: (userData) => {
-        console.log("auth hii", userData);
+        console.log("Attempting signup with:", userData);
 
         return {
           url: "/auth/signup",
@@ -22,3 +26,5 @@ export const authApi = baseApi.injectEndpoints({
     }),
   }),
 });
+
+export const { useLoginUserMutation, useSignupMutation } = authApi;

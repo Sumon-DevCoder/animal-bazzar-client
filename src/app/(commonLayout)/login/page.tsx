@@ -18,7 +18,7 @@ const Login = () => {
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [login] = authApi.useLoginMutation();
+  const [loginUser] = authApi.useLoginUserMutation();
   const {
     register,
     handleSubmit,
@@ -36,12 +36,12 @@ const Login = () => {
       };
 
       // Call the login mutation
-      const res = await login(userInfo).unwrap();
+      const res = await loginUser(userInfo).unwrap();
+
+      console.log("res", res);
 
       // redirect path
       const from = searchParams.get("from") || "/";
-
-      console.log("pathname", from);
 
       if (res) {
         const user = verifyToken(res?.token) as TUser; // set user in store

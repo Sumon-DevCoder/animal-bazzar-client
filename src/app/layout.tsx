@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 // import { Inter } from "@next/font/google";
 import ReduxProvider from "./provider/ReduxProvider";
+import TopLoader from "./components/TopLoader";
+import ScrollToTopButton from "./components/ScrollTopButton";
 
 // const inter = Inter({
 //   subsets: ["latin"],
@@ -23,7 +25,9 @@ export default function RootLayout({
     <html lang="en">
       {/* <body className={inter.className}> */}
       <body>
-        <div className="bg-slate-200">
+        <div className="bg-slate-50 dark:bg-gray-800">
+          <TopLoader />
+          <ScrollToTopButton />
           <ReduxProvider>{children}</ReduxProvider>
         </div>
       </body>

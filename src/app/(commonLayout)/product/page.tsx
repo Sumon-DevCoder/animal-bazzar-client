@@ -27,10 +27,13 @@ const ProductPage = async () => {
   const products = res?.data?.data?.result || [];
 
   return (
-    <div className="p-6 ">
-      <h1 className="text-xl lg:text-3xl font-bold mb-5 text-center text-black">
-        Featured Products
+    <div className="p-6">
+      <h1 className="text-xl  lg:text-3xl font-bold  text-center text-black dark:text-white pt-10">
+        Available Animal & Pets
       </h1>
+      <p className="text-xl lg:text-md my-2 mb-5 text-center text-black dark:text-white">
+        You can categories your favorite pets search and filtering
+      </p>
       <ProductList productsData={products} />
     </div>
   );
