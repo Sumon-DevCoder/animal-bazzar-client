@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Navbar from "./components/page/shared/Navbar";
 import Footer from "./components/page/shared/Footer";
+import NewsletterForm from "./components/page/home/NewsLetter";
 
 export const metadata: Metadata = {
   title: "Animal Bazaar",
@@ -16,6 +17,7 @@ export default async function dashboardLayout({
     <div>
       <Navbar />
       {children}
+      <NewsletterForm />
       <Footer />
     </div>
   );

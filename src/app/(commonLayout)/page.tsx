@@ -3,6 +3,8 @@ import Banner from "./components/page/home/Banner";
 import ProductPage from "./product/page";
 import Services from "./components/page/home/Services";
 import WhyChooseUs from "./components/page/home/WhyChooseUs";
+import Testimonial from "./components/page/home/TestimonialSection";
+import OfferSection from "./components/page/home/OfferSection";
 
 const HomePage = () => {
   return (
@@ -12,6 +14,8 @@ const HomePage = () => {
       <div className="max-w-screen-xl m-auto">
         <ProductPage />
         <WhyChooseUs />
+        <Testimonial />
+        <OfferSection />
       </div>
     </div>
   );
