@@ -37,7 +37,7 @@ This project is a full-fledged Animal Bazaar - Fronted service with the followin
 - **User Management**: User have a dedicated dashboard to manage all operations.
 - **Image Hosting**: Images are uploaded and served via Imgbb.
 
-## Core Features
+## Features
 
 1. **Product Browsing and Management**:
 
