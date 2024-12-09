@@ -16,7 +16,7 @@ const Banner = () => {
 
         {/* Static content */}
         <div className="relative flex flex-col items-center justify-center h-full text-white text-center p-4 space-y-4">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-wider mb-2 dark:text-green-400">
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-wider mb-2 dark:text-green-400">
             Discover the World of Animals at <br /> Your Fingertips
           </h1>
 
@@ -28,7 +28,7 @@ const Banner = () => {
           <div>
             <PrimaryButton
               name="BUY NOW"
-              path="/"
+              path="/product"
               icons={
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

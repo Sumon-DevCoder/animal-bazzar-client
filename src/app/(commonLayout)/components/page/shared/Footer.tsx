@@ -10,7 +10,7 @@ const Footer = () => {
             <h1 className="text-2xl font-bold mb-3">
               <Link
                 href="/"
-                className="hover:text-blue-400 transition-colors duration-1000 ease-in-out"
+                className="hover:text-blue-400 transition-colors duration-2000 ease-in-out"
               >
                 Animal Bazaar
               </Link>
@@ -22,23 +22,23 @@ const Footer = () => {
             {/* Social Links */}
             <div className="flex gap-5 mt-5">
               <a
-                href="https://facebook.com"
+                href="https://facebook.com/sumon-devcoder"
                 target="_blank"
                 className="hover:scale-110 bg-blue-600 p-2 rounded-full"
               >
                 <svg
+                  xmlns="http://www.w3.org/2000/svg"
                   width="24"
                   height="24"
                   fill="currentColor"
-                  className="text-white"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
+                  className="bi bi-facebook"
+                  viewBox="0 0 16 16"
                 >
-                  <path d="M22 0H2C.9 0 0 .9 0 2v20c0 1.1.9 2 2 2h10.6v-8.7H9.6v-3.5h3V8.2c0-3.1 1.8-4.9 4.6-4.9 1.3 0 2.6.2 2.6.2v2.8h-1.5c-1.5 0-2 .9-2 1.9v2.4h3.4l-.5 3.5h-3V24H22c1.1 0 2-.9 2-2V2c0-1.1-.9-2-2-2z" />
+                  <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951" />
                 </svg>
               </a>
               <a
-                href="https://instagram.com"
+                href="https://sumon-dev-portfolio-fronted.vercel.app/"
                 target="_blank"
                 className="hover:scale-110 bg-pink-500 p-2 rounded-full"
               >
@@ -54,7 +54,7 @@ const Footer = () => {
                 </svg>
               </a>
               <a
-                href="https://twitter.com"
+                href="https://github.com/sumon-devcoder"
                 target="_blank"
                 className="hover:scale-110 bg-blue-400 p-2 rounded-full"
               >
@@ -81,8 +81,11 @@ const Footer = () => {
             <p className="text-white/80 text-sm mb-2">
               <strong>Email:</strong> support@animalbazaar.com
             </p>
-            <p className="text-white/80 text-sm">
+            <p className="text-white/80 text-sm mb-2">
               <strong>Address:</strong> 123 Green Avenue, Animal City
+            </p>
+            <p className="text-white/80 text-sm ">
+              <strong>Monday - Friday </strong>: 8:00 AM - 9:00 PM
             </p>
           </div>
 
@@ -93,7 +96,7 @@ const Footer = () => {
               <li>
                 <Link
                   href="/about"
-                  className="hover:text-blue-400 transition-colors duration-1000 ease-in-out"
+                  className="hover:text-blue-400 transition-colors duration-2000 ease-in-out"
                 >
                   About Us
                 </Link>
@@ -101,7 +104,7 @@ const Footer = () => {
               <li>
                 <Link
                   href="/privacy-policy"
-                  className="hover:text-blue-400 transition-colors duration-1000 ease-in-out"
+                  className="hover:text-blue-400 transition-colors duration-2000 ease-in-out"
                 >
                   Privacy Policy
                 </Link>
@@ -109,7 +112,7 @@ const Footer = () => {
               <li>
                 <Link
                   href="/term-service"
-                  className="hover:text-blue-400 transition-colors duration-1000 ease-in-out"
+                  className="hover:text-blue-400 transition-colors duration-2000 ease-in-out"
                 >
                   Terms of Service
                 </Link>
@@ -117,7 +120,7 @@ const Footer = () => {
               <li>
                 <Link
                   href="/contact"
-                  className="hover:text-blue-400 transition-colors duration-1000 ease-in-out"
+                  className="hover:text-blue-400 transition-colors duration-2000 ease-in"
                 >
                   Contact
                 </Link>
