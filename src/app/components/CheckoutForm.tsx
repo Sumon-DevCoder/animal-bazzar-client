@@ -8,8 +8,8 @@ import useCurrentUserInfo from "@/hooks/useCurrentUserInfo";
 const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
-  const { user } = useCurrentUserInfo();
-  const { data } = useGetCartByUserQuery(user?.email);
+  const { email } = useCurrentUserInfo();
+  const { data } = useGetCartByUserQuery(email);
 
   const cartItems = data?.data || [];
 

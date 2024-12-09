@@ -1,21 +1,17 @@
-import { useGetUsersQuery } from "@/redux/features/user/userApi";
-import useCurrentUserInfo from "@/hooks/useCurrentUserInfo";
-import { TUser } from "../types/gobal";
+import { useGetUserByEmailQuery } from "@/redux/features/user/userApi";
+import useCurrentUserInfo from "./useCurrentUserInfo";
 
-const useCurrentUserData = () => {
-  const { user } = useCurrentUserInfo();
+const useCurrentUserInfoData = () => {
+  const { email } = useCurrentUserInfo();
   const {
-    data: usersData,
+    data: userData,
     isLoading: isUserLoading,
     refetch,
-  } = useGetUsersQuery({});
-  const users = usersData?.data?.result || [];
+  } = useGetUserByEmailQuery(email);
 
-  const currentUserInfo = user
-    ? users.find((u: TUser) => u.email === user.email)
-    : null;
+  const user = userData?.data || {};
 
-  return { currentUserInfo, isUserLoading, refetch };
+  return { user, isUserLoading, refetch };
 };
 
-export default useCurrentUserData;
+export default useCurrentUserInfoData;

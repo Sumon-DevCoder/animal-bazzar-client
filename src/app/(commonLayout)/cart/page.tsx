@@ -14,9 +14,9 @@ import { toast } from "sonner";
 import { useEffect } from "react";
 
 const MyCart = () => {
-  const { user } = useCurrentUserInfo();
-  const { currentUserInfo } = useCurrentUserData();
-  const { data, refetch } = useGetCartByUserQuery(user?.email);
+  const { email } = useCurrentUserInfo();
+  const { user } = useCurrentUserData();
+  const { data, refetch } = useGetCartByUserQuery(email);
   const [createOrder] = useCreateorderMutation();
   const [deleteCartById] = useDeleteCartByIdMutation();
   const cartItems = data?.data || [];
@@ -27,7 +27,7 @@ const MyCart = () => {
 
   const handleOrder = async () => {
     const orderInfo = {
-      user: currentUserInfo,
+      user,
       products: cartItems,
     };
 

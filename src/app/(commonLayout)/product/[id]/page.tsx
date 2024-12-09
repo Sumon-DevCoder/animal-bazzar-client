@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation";
 const ProductDetailsPage = () => {
   const { id } = useParams();
   const { data } = useGetSingleProductQuery(id);
-  const { user } = useCurrentUserInfo();
+  const { email } = useCurrentUserInfo();
   const router = useRouter();
 
   const [createCart] = useCreateCartMutation();
@@ -22,13 +22,13 @@ const ProductDetailsPage = () => {
     data?.data || {};
 
   const handleAddCart = async (productId: string) => {
-    if (user && user?.email) {
+    if (email && email) {
       try {
         const cartInfo = {
           product: productId,
           productName: name,
           price,
-          user: user?.email,
+          user: email,
         };
 
         console.log(cartInfo);

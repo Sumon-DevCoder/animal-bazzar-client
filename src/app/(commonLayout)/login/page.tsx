@@ -12,9 +12,11 @@ import { HiEye, HiEyeOff } from "react-icons/hi";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { TError } from "@/types/gobal";
 import Link from "next/link";
+import SocialLogin from "../components/SocialLogin/SocialLogin";
 
 const Login = () => {
   const dispatch = useDispatch();
+  const [activeRole, setActiveRole] = useState<string | null>("admin");
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -23,8 +25,25 @@ const Login = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+    reset,
+  } = useForm({
+    defaultValues: {
+      email: "mustafiz247@gmail.com",
+      password: "Mustafiz247@",
+    },
+  });
   const [showPassword, setShowPassword] = useState(false);
+
+  // handle default value
+  const handleDefaultValueChange = (role: string) => {
+    setActiveRole(role);
+    const newValues =
+      role === "admin"
+        ? { email: "mustafiz247@gmail.com", password: "Mustafiz247@" }
+        : { email: "sumon2@gmail.com", password: "Sumon2@" };
+
+    reset(newValues);
+  };
 
   const onSubmit = async (data: FieldValues) => {
     const toastId = toast.loading("Logging in");
@@ -75,10 +94,34 @@ const Login = () => {
     <div className="mx-auto">
       <div className="flex justify-center px-6 py-12">
         <div className="w-full xl:w-3/4 lg:w-11/12 flex justify-center">
-          <div className="w-full lg:w-7/12 shadow-xl bg-gray-100 dark:bg-gray-700 p-5 rounded-lg lg:rounded-l-none">
+          <div className="w-full lg:w-7/12 shadow-xl bg-gray-100 dark:bg-gray-800 p-5 rounded-lg lg:rounded-l-none">
             <h3 className="py-4 text-2xl text-center text-gray-800 dark:text-white">
               Login to Your Account
             </h3>
+
+            <div className="text-center space-x-2">
+              <button
+                onClick={() => handleDefaultValueChange("admin")}
+                className={`btn btn-sm btn-outline  ${
+                  activeRole === "admin"
+                    ? "btn-active bg-blue-500 text-white dark:text-blue-400"
+                    : "text-gray-800 dark:text-white"
+                }`}
+              >
+                Admin Credentials
+              </button>
+              <button
+                onClick={() => handleDefaultValueChange("user")}
+                className={`btn btn-sm btn-outline ${
+                  activeRole === "user"
+                    ? "btn-active bg-blue-500 text-white dark:text-blue-400"
+                    : "text-gray-800 dark:text-white"
+                }`}
+              >
+                User Credentials
+              </button>
+            </div>
+
             <form
               onSubmit={handleSubmit(onSubmit)}
               className="px-8 pt-6 pb-8 mb-4 bg-gray-100 dark:bg-gray-800 rounded"
@@ -91,7 +134,7 @@ const Login = () => {
                   Email
                 </label>
                 <input
-                  className="w-full px-3 py-2 text-sm leading-tight text-gray-700 dark:text-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                  className="w-full px-3 py-2 text-sm leading-tight  text-black  rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                   id="email"
                   type="email"
                   placeholder="Enter Email"
@@ -119,7 +162,7 @@ const Login = () => {
                 </label>
                 <div className="relative">
                   <input
-                    className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 dark:text-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                    className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700  border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                     id="password"
                     type={showPassword ? "text" : "password"}
                     placeholder="Enter Password"
@@ -158,7 +201,6 @@ const Login = () => {
                   Login
                 </button>
               </div>
-
               <div className="text-center">
                 <p className="inline-block text-md text-black dark:text-blue-500 align-baseline">
                   Don&apos;t have an account?{" "}
@@ -171,6 +213,7 @@ const Login = () => {
                 </p>
               </div>
             </form>
+            <SocialLogin />
           </div>
         </div>
       </div>

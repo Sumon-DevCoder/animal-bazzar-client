@@ -13,9 +13,9 @@ const HomePage = () => {
       <Services />
       <div className="max-w-screen-xl m-auto">
         <ProductPage />
+        <OfferSection />
         <WhyChooseUs />
         <Testimonial />
-        <OfferSection />
       </div>
     </div>
   );

@@ -1,19 +1,12 @@
+import { authOptions } from "./../../../../utils/authOptions";
 // /* eslint-disable @typescript-eslint/no-explicit-any */
 // import nexiosInstance from "nexios-http";
 // import NextAuth from "next-auth";
 // import GoogleProvider from "next-auth/providers/google";
 // import { cookies } from "next/headers";
 
-import { authOptions } from "@/utils/authOptions";
 import NextAuth from "next-auth";
-
-// const handler = NextAuth({
-//   providers: [
-//     GoogleProvider({
-//       clientId: process.env.GOOGLE_CLIENT_ID as string,
-//       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-//     }),
-//   ],
+const handler = NextAuth(authOptions);
 
 //   callbacks: {
 //     async signIn({ profile, account }: any) {
@@ -62,9 +55,5 @@ import NextAuth from "next-auth";
 
 //   secret: process.env.NEXTAUTH_SECRET as string,
 // });
-
-// export { handler as GET, handler as POST };
-
-const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };

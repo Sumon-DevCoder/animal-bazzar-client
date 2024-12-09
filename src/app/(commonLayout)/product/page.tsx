@@ -24,6 +24,8 @@ const ProductPage = async () => {
     cache: "no-store",
   });
 
+  console.log("res", res);
+
   const products = res?.data?.data?.result || [];
 
   return (

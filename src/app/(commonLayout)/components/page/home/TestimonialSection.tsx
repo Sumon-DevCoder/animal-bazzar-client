@@ -4,7 +4,6 @@ import Image from "next/image";
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css"; // Import Swiper styles
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa"; // Custom arrow icons from react-icons
 
 const testimonials = [
   {
@@ -81,7 +80,7 @@ const testimonials = [
 
 const Testimonial = () => {
   return (
-    <section className="py-16 bg-gray-50 dark:bg-gray-800 px-10">
+    <section className="py-16 bg-gray-50 dark:bg-gray-800 px-10 relative">
       <div className="container mx-auto text-center">
         <h2 className="text-3xl font-semibold text-gray-800 dark:text-white mb-8">
           What Our Customers Say
@@ -134,12 +133,12 @@ const Testimonial = () => {
         </Swiper>
 
         {/* Custom arrow buttons */}
-        <div className="swiper-button-prev absolute top-1/2 left-4 transform -translate-y-1/2 z-10 cursor-pointer text-2xl text-gray-800 dark:text-white">
+        {/* <div className="swiper-button-prev absolute top-1/2 left-6 transform -translate-y-1/2 z-10 cursor-pointer text-2xl text-gray-800 dark:text-white">
           <FaArrowLeft />
         </div>
         <div className="swiper-button-next absolute top-1/2 right-4 transform -translate-y-1/2 z-10 cursor-pointer text-2xl text-gray-800 dark:text-white">
           <FaArrowRight />
-        </div>
+        </div> */}
       </div>
     </section>
   );

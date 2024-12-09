@@ -40,7 +40,7 @@ const OfferSection = () => {
   }, []);
 
   return (
-    <div className="flex flex-col md:flex-row gap-6 items-center p-6 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-lg transition-all duration-300">
+    <div className="flex flex-col md:flex-row gap-6 mb-20 items-center p-6 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-lg transition-all duration-300">
       {/* Left Side - Image */}
       <div className="w-full md:w-1/2">
         <Image
@@ -98,7 +98,7 @@ const OfferSection = () => {
             </span>
           </div>
         </div>
-        <button className="mt-6 px-6 py-2 md:px-8 md:py-3 bg-blue-600 dark:bg-blue-500 text-white text-base md:text-lg font-semibold rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-all duration-300 shadow-md">
+        <button className="mt-6 px-6 py-2 md:px-8 md:py-3 bg-green-600 dark:bg-gray-500 text-white text-base md:text-lg font-semibold rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-all duration-300 shadow-md">
           Add To Cart
         </button>
       </div>

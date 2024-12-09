@@ -9,11 +9,12 @@ import Image from "next/image";
 import Link from "next/link";
 import useCurrentUserInfo from "../../../../../hooks/useCurrentUserInfo";
 import useDarkMode from "@/hooks/useDarkMode";
+import DropDownProfile from "@/app/components/DropDownProfile";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
-  const { isAdmin, isVerifiedUser } = useCurrentUserInfo();
+  const { role } = useCurrentUserInfo();
   const [isDarkMode, toggleDarkMode] = useDarkMode();
 
   const handleToggleMenu = () => {
@@ -82,10 +83,10 @@ const Navbar = () => {
       >
         Order History
       </Link>
-      {isAdmin && (
+      {role === "admin" && (
         <Link
           href="/admin-dashboard"
-          className={`p-2 rounded-lg text-slate-200 dark:text-slate-100 ${
+          className={`p-2 rounded-lg text-slate-800 dark:text-slate-100 ${
             pathname === "/admin-dashboard"
               ? "text-orange-400 border-orange-600 dark:text-orange-300 dark:border-orange-500"
               : ""
@@ -94,10 +95,10 @@ const Navbar = () => {
           Dashboard
         </Link>
       )}
-      {isVerifiedUser && (
+      {role === "user" && (
         <Link
           href="/dashboard"
-          className={`p-2 rounded-lg text-slate-200 dark:text-slate-100 ${
+          className={`p-2 rounded-lg text-slate-800 dark:text-slate-100 ${
             pathname === "/dashboard"
               ? "text-orange-400 border-orange-600 dark:text-orange-300 dark:border-orange-500"
               : ""
@@ -199,7 +200,7 @@ const Navbar = () => {
           >
             <span className="sr-only">Enable</span>
           </label>
-          <DropdownProfile />
+          <DropDownProfile />
         </div>
       </div>
     </div>

@@ -5,7 +5,7 @@
 import useCurrentUserData from "@/hooks/useCurrentUserInfoData";
 
 const UserProfile = () => {
-  const { currentUserInfo } = useCurrentUserData();
+  const { user } = useCurrentUserData();
 
   return (
     <div className="flex justify-center items-center -pt-10 min-h-screen">
@@ -14,14 +14,14 @@ const UserProfile = () => {
         <div className="flex items-center p-6 bg-blue-600 text-white">
           <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-white mr-4">
             <img
-              src={currentUserInfo?.img}
+              src={user?.img}
               alt="User Profile"
               className="object-cover w-full h-full"
             />
           </div>
           <div>
-            <h2 className="text-2xl font-bold">{currentUserInfo?.name}</h2>
-            <p className="text-lg opacity-90">{currentUserInfo?.email}</p>
+            <h2 className="text-2xl font-bold">{user?.name}</h2>
+            <p className="text-lg opacity-90">{user?.email}</p>
           </div>
         </div>
 
@@ -33,11 +33,11 @@ const UserProfile = () => {
           <div className="space-y-2">
             <div className="flex justify-between">
               <span className="text-gray-700">Address:</span>
-              <span className="text-gray-800">{currentUserInfo?.address}</span>
+              <span className="text-gray-800">{user?.address}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-700">Phone:</span>
-              <span className="text-gray-800">{currentUserInfo?.phone}</span>
+              <span className="text-gray-800">{user?.phone}</span>
             </div>
           </div>
         </div>

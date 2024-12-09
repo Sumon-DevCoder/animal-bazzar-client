@@ -14,23 +14,23 @@ import { MdDashboard } from "react-icons/md";
 import { AiFillProfile } from "react-icons/ai";
 
 const DropDownProfile = () => {
-  const { currentUserInfo: user, refetch } = useCurrentUserData();
-  const { isAdmin } = useCurrentUserInfo();
+  const { user, refetch } = useCurrentUserData();
+  const { role } = useCurrentUserInfo();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dispatch = useAppDispatch();
-
-  console.log(user);
 
   useEffect(() => {
     refetch();
   }, [refetch]);
+
+  console.log("user", user);
 
   // toggle
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
 
   const handleLogout = async () => {
     try {
-      await dispatch(logout());
+      dispatch(logout());
       toast.success("Logout Successful");
     } catch (err: any) {
       toast.error("Logout Failed. Please try again.");
@@ -50,13 +50,17 @@ const DropDownProfile = () => {
                   className="rounded-full"
                 />
               ) : (
-                <p>No image available</p>
+                <img
+                  src="https://i.ibb.co/j8KxL3f/blank-profile-picture-973460-640.png"
+                  alt="Default Avatar"
+                  className="rounded-full"
+                />
               )}
             </div>
           </button>
 
           {dropdownOpen && (
-            <div className="absolute right-0 mt-2 w-48 bg-white rounded shadow-lg">
+            <div className="absolute right-0 mt-2 min-w-60 bg-white rounded shadow-lg">
               <Link
                 href="/dashboard"
                 className="flex items-center px-4 py-2 text-gray-800 hover:bg-gray-100"
@@ -64,7 +68,7 @@ const DropDownProfile = () => {
                 <FaUserCircle className="mr-2" />
                 {user?.name}
               </Link>
-              {isAdmin ? (
+              {role === "admin" ? (
                 <Link
                   href="/admin-dashboard"
                   className="flex items-center px-4 py-2 text-gray-800 hover:bg-gray-100"

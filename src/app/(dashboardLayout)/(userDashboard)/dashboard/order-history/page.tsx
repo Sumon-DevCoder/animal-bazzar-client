@@ -5,8 +5,8 @@ import { TOrder } from "@/types/gobal";
 import useCurrentUserInfo from "@/hooks/useCurrentUserInfo";
 
 const OrderManagement = () => {
-  const { user } = useCurrentUserInfo();
-  const { data: orderData } = useGetorderByUserQuery(user?.email);
+  const { email } = useCurrentUserInfo();
+  const { data: orderData } = useGetorderByUserQuery(email);
 
   const orders = orderData?.data || [];
 

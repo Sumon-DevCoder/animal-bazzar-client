@@ -18,30 +18,34 @@ const AdminSidebar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const dispatch = useDispatch();
 
-  const { isAdmin } = useCurrentUserInfo();
+  const { role } = useCurrentUserInfo();
 
-  const links = isAdmin
-    ? [
-        { name: "📊 Dashboard", path: "/admin-dashboard" },
-        {
-          name: "📦 Products",
-          subLinks: [
-            {
-              name: "➕ Create Product",
-              path: "/admin-dashboard/create-product",
-            },
-            { name: "📋 Product List", path: "/admin-dashboard/product-list" },
-          ],
-        },
-        { name: "📦 Orders", path: "/admin-dashboard/order-management" },
-        { name: "👥 Users", path: "/admin-dashboard/user-management" },
-        { name: "⚙️ Settings", path: "/admin-dashboard/setting" },
-      ]
-    : [
-        { name: "📊 Dashboard", path: "/dashboard" },
-        { name: "👤 Profile", path: "/dashboard/profile" },
-        { name: "📅 Order History", path: "/dashboard/order-history" },
-      ];
+  const links =
+    role === "admin"
+      ? [
+          { name: "📊 Dashboard", path: "/admin-dashboard" },
+          {
+            name: "📦 Products",
+            subLinks: [
+              {
+                name: "➕ Create Product",
+                path: "/admin-dashboard/create-product",
+              },
+              {
+                name: "📋 Product List",
+                path: "/admin-dashboard/product-list",
+              },
+            ],
+          },
+          { name: "📦 Orders", path: "/admin-dashboard/order-management" },
+          { name: "👥 Users", path: "/admin-dashboard/user-management" },
+          { name: "⚙️ Settings", path: "/admin-dashboard/setting" },
+        ]
+      : [
+          { name: "📊 Dashboard", path: "/dashboard" },
+          { name: "👤 Profile", path: "/dashboard/profile" },
+          { name: "📅 Order History", path: "/dashboard/order-history" },
+        ];
 
   const generalLinks = [
     { name: "🏠 Home", path: "/" },
