@@ -24,14 +24,14 @@ const NewsletterForm = () => {
   };
 
   return (
-    <div className="w-full mx-auto p-6 bg-gradient-to-r from-green-500 to-gray-400 dark:from-green-600 dark:via-gray-700 dark:to-gray-900 shadow-lg">
-      <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
+    <div className="w-full mx-auto p-6 bg-gradient-to-t from-green-500 to-green-800 dark:bg-gradient-to-r dark:from-green-600 dark:via-gray-700 dark:to-gray-900 shadow-lg">
+      <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0 px-14">
         {/* Left Side Content */}
         <div className="flex-1 text-center md:text-left">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+          <h2 className="text-3xl font-bold text-gray-200 dark:text-white mb-4">
             Newsletter
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-300">
+          <p className="text-lg text-gray-300 dark:text-gray-300">
             Stay up to date about product drops, news, and special sales.
           </p>
         </div>

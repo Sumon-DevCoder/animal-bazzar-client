@@ -13,11 +13,13 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { TError } from "@/types/gobal";
 import Link from "next/link";
 import SocialLogin from "../components/SocialLogin/SocialLogin";
+import useCurrentUserInfo from "@/hooks/useCurrentUserInfo";
 
 const Login = () => {
   const dispatch = useDispatch();
   const [activeRole, setActiveRole] = useState<string | null>("admin");
   const pathname = usePathname();
+  const { role } = useCurrentUserInfo();
   const router = useRouter();
   const searchParams = useSearchParams();
   const [loginUser] = authApi.useLoginUserMutation();
@@ -60,7 +62,7 @@ const Login = () => {
       console.log("res", res);
 
       // redirect path
-      const from = searchParams.get("from") || "/";
+      // const from = searchParams.get("from") || "/";
 
       if (res) {
         const user = verifyToken(res?.token) as TUser; // set user in store
@@ -70,7 +72,7 @@ const Login = () => {
 
         // success
         toast.success("Login Successful", { id: toastId, duration: 3000 });
-        router.push(from);
+        router.push(`/${user?.role}-dashboard`);
       }
     } catch (err) {
       const serverMsgErr =

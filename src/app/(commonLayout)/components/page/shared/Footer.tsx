@@ -1,19 +1,21 @@
-// components/Footer.tsx
 import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="bg-green-700 text-white py-10">
+    <footer className="bg-gradient-to-r from-green-600 to-green-900 dark:from-green-600 dark:via-gray-700 dark:to-gray-900 shadow-lg text-white py-10">
       <div className="container mx-auto px-6 md:px-10">
         <div className="flex flex-col md:flex-row md:justify-between gap-10">
           {/* Brand Section */}
           <div className="md:w-1/3">
             <h1 className="text-2xl font-bold mb-3">
-              <Link href="/" className="hover:underline">
+              <Link
+                href="/"
+                className="hover:text-blue-400 transition-colors duration-1000 ease-in-out"
+              >
                 Animal Bazaar
               </Link>
             </h1>
-            <p className="text-white/80 text-sm">
+            <p className="text-white/80 text-sm md:text-md font-medium">
               Explore a wide variety of animals and make your shopping
               experience enjoyable. Quality and satisfaction are our priorities.
             </p>
@@ -22,7 +24,7 @@ const Footer = () => {
               <a
                 href="https://facebook.com"
                 target="_blank"
-                className="hover:scale-110"
+                className="hover:scale-110 bg-blue-600 p-2 rounded-full"
               >
                 <svg
                   width="24"
@@ -38,7 +40,7 @@ const Footer = () => {
               <a
                 href="https://instagram.com"
                 target="_blank"
-                className="hover:scale-110"
+                className="hover:scale-110 bg-pink-500 p-2 rounded-full"
               >
                 <svg
                   width="24"
@@ -54,7 +56,7 @@ const Footer = () => {
               <a
                 href="https://twitter.com"
                 target="_blank"
-                className="hover:scale-110"
+                className="hover:scale-110 bg-blue-400 p-2 rounded-full"
               >
                 <svg
                   width="24"
@@ -87,24 +89,36 @@ const Footer = () => {
           {/* Links Section */}
           <div className="md:w-1/3">
             <h3 className="text-lg font-semibold mb-3">Quick Links</h3>
-            <ul className="text-white/80 text-sm space-y-2">
+            <ul className="text-white/80 text-sm space-y-2 font-semibold">
               <li>
-                <Link href="/about" className="hover:underline">
+                <Link
+                  href="/about"
+                  className="hover:text-blue-400 transition-colors duration-1000 ease-in-out"
+                >
                   About Us
                 </Link>
               </li>
               <li>
-                <Link href="/privacy-policy" className="hover:underline">
+                <Link
+                  href="/privacy-policy"
+                  className="hover:text-blue-400 transition-colors duration-1000 ease-in-out"
+                >
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link href="/term-service" className="hover:underline">
+                <Link
+                  href="/term-service"
+                  className="hover:text-blue-400 transition-colors duration-1000 ease-in-out"
+                >
                   Terms of Service
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="hover:underline">
+                <Link
+                  href="/contact"
+                  className="hover:text-blue-400 transition-colors duration-1000 ease-in-out"
+                >
                   Contact
                 </Link>
               </li>

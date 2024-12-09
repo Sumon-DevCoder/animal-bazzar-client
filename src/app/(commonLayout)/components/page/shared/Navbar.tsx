@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
-import DropdownProfile from "@/app/components/DropDownProfile";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import logoImg from "../../../../../../public/assets/animal_logo.jpg";
@@ -10,109 +9,23 @@ import Link from "next/link";
 import useCurrentUserInfo from "../../../../../hooks/useCurrentUserInfo";
 import useDarkMode from "@/hooks/useDarkMode";
 import DropDownProfile from "@/app/components/DropDownProfile";
+import PrimaryButton from "@/app/components/PrimaryButton";
+import { FaSignInAlt } from "react-icons/fa";
+import useNavLinks from "@/hooks/useNavLinks";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const pathname = usePathname();
-  const { role } = useCurrentUserInfo();
+  const { email } = useCurrentUserInfo();
   const [isDarkMode, toggleDarkMode] = useDarkMode();
+  const Links = useNavLinks();
 
   const handleToggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const Links = (
-    <>
-      <Link
-        href="/"
-        className={`p-2 rounded-lg text-slate-800 dark:text-slate-100 ${
-          pathname === "/"
-            ? "text-orange-400 border-orange-600 dark:text-orange-300 dark:border-orange-500"
-            : ""
-        }`}
-      >
-        Home
-      </Link>
-      <Link
-        href="/product"
-        className={`p-2 rounded-lg text-slate-800 dark:text-slate-100 ${
-          pathname === "/product"
-            ? "text-orange-400 border-orange-600 dark:text-orange-300 dark:border-orange-500"
-            : ""
-        }`}
-      >
-        Products
-      </Link>
-      <Link
-        href="/about"
-        className={`p-2 rounded-lg text-slate-800 dark:text-slate-100 ${
-          pathname === "/about"
-            ? "text-orange-400 border-orange-600 dark:text-orange-300 dark:border-orange-500"
-            : ""
-        }`}
-      >
-        About
-      </Link>
-      <Link
-        href="/contact"
-        className={`p-2 rounded-lg text-slate-800 dark:text-slate-100 ${
-          pathname === "/contact"
-            ? "text-orange-400 border-orange-600 dark:text-orange-300 dark:border-orange-500"
-            : ""
-        }`}
-      >
-        Contact
-      </Link>
-      <Link
-        href="/cart"
-        className={`p-2 rounded-lg text-slate-800 dark:text-slate-100 ${
-          pathname === "/cart"
-            ? "text-orange-400 border-orange-600 dark:text-orange-300 dark:border-orange-500"
-            : ""
-        }`}
-      >
-        Carts
-      </Link>
-      <Link
-        href="/dashboard/order-history"
-        className={`p-2 rounded-lg text-slate-800 dark:text-slate-100 ${
-          pathname === "/about"
-            ? "text-orange-400 border-orange-600 dark:text-orange-300 dark:border-orange-500"
-            : ""
-        }`}
-      >
-        Order History
-      </Link>
-      {role === "admin" && (
-        <Link
-          href="/admin-dashboard"
-          className={`p-2 rounded-lg text-slate-800 dark:text-slate-100 ${
-            pathname === "/admin-dashboard"
-              ? "text-orange-400 border-orange-600 dark:text-orange-300 dark:border-orange-500"
-              : ""
-          }`}
-        >
-          Dashboard
-        </Link>
-      )}
-      {role === "user" && (
-        <Link
-          href="/dashboard"
-          className={`p-2 rounded-lg text-slate-800 dark:text-slate-100 ${
-            pathname === "/dashboard"
-              ? "text-orange-400 border-orange-600 dark:text-orange-300 dark:border-orange-500"
-              : ""
-          }`}
-        >
-          Dashboard
-        </Link>
-      )}
-    </>
-  );
-
   return (
     <div className="sticky top-0 z-50 ">
-      <div className="navbar md:px-5 text-white dark:bg-gray-800 bg-gray-100 bg-opacity-50">
+      <div className="navbar md:px-5 md:h-10 text-white dark:bg-gray-800 bg-gray-100 bg-opacity-50">
         <div className="navbar-start">
           <div className="dropdown">
             <div
@@ -125,7 +38,7 @@ const Navbar = () => {
                 // Close Icon
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
+                  className="h-5 w-5 dark:text-white text-black"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -200,7 +113,16 @@ const Navbar = () => {
           >
             <span className="sr-only">Enable</span>
           </label>
-          <DropDownProfile />
+
+          {email ? (
+            <DropDownProfile />
+          ) : (
+            <PrimaryButton
+              path="/login"
+              name="Login"
+              icons={<FaSignInAlt className="mr-2" />}
+            />
+          )}
         </div>
       </div>
     </div>

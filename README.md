@@ -12,7 +12,7 @@ live version of the application [here](https://animal-bazaar-client.vercel.app/)
 - [Project Description](#project-description)
 - [Features](#features)
 - [Technology Stack](#technology-stack)
-- [Installation Guidelines](#installation-guidelines)
+- [Installation Guidelines](#installation)
 - [Usage](#usage)
 - [Contributing](#contributing)
 - [License](#license)
@@ -37,7 +37,7 @@ This project is a full-fledged Animal Bazaar - Fronted service with the followin
 - **User Management**: User have a dedicated dashboard to manage all operations.
 - **Image Hosting**: Images are uploaded and served via Imgbb.
 
-## Core Features
+## Features
 
 1. **Product Browsing and Management**:
 
