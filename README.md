@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Animal Bazaar - Fronted
 
 Animal Bazaar is a comprehensive, full-stack e-commerce application built with Next.js. The platform facilitates seamless interaction between two key user roles: Admin and User. It’s designed specifically for the sale and management of animals, focusing on providing a streamlined user experience for customers while empowering administrators with robust management capabilities. The application is built with TypeScript, Tailwind CSS, and leverages Next.js App Router for efficient server-side rendering and routing.
