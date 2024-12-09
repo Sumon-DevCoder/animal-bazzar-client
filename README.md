@@ -13,10 +13,6 @@ live version of the application [here](https://animal-bazaar-client.vercel.app/)
 - [Features](#features)
 - [Technology Stack](#technology-stack)
 - [Installation Guidelines](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
 
 ## Introduction
 
