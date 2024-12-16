@@ -1,61 +1,64 @@
+import Image from "next/image";
 import React from "react";
 
-const About = () => {
+const AboutSection = () => {
   return (
-    <div className="bg-gradient-to-br from-purple-100 to-indigo-200 min-h-screen p-8">
-      <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-2xl p-8">
-        <h1 className="text-4xl font-semibold text-gray-800 text-center mb-6">
-          About Us
-        </h1>
-
-        <section className="mb-12">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">Our Mission</h2>
-          <p className="text-lg text-gray-600">
-            Our mission is to provide a seamless, user-friendly platform for all
-            animal enthusiasts to explore and buy a wide variety of animals with
-            ease and confidence. We strive to create a safe and reliable
-            environment where people can find pets or farm animals with detailed
-            information and guidance.
-          </p>
-        </section>
-
-        <section className="mb-12">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">Our Vision</h2>
-          <p className="text-lg text-gray-600">
-            We envision becoming the leading platform for animal lovers,
-            offering a broad selection of animals, exceptional customer support,
-            and a trusted community of sellers and buyers. Our goal is to ensure
-            a positive experience for every user, with a commitment to animal
-            welfare and education.
-          </p>
-        </section>
-
-        <section className="mb-12">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">Contact Us</h2>
-          <p className="text-lg text-gray-600">
-            Have questions or need assistance? Reach out to our support team:
-          </p>
-          <ul className="list-none mt-4 space-y-2">
-            <li className="text-lg text-gray-800">
-              Email: support@animalbazaar.com
-            </li>
-            <li className="text-lg text-gray-800">Phone: +1 (800) 123-4567</li>
-          </ul>
-        </section>
-
-        <section className="mt-12 text-center">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">
-            Join Us Today!
-          </h2>
-          <p className="text-lg text-gray-600">
-            Whether you&apos;re looking to adopt a pet or find farm animals, we
-            have something for everyone. Start exploring now and join the Animal
-            Bazaar community!
-          </p>
-        </section>
+    <section className="flex flex-col-reverse lg:flex-row items-center justify-between gap-8 p-8 bg-gray-50">
+      {/* Left Content */}
+      <div className="lg:w-1/2 space-y-6">
+        <h2 className="text-3xl font-bold text-gray-800">
+          About Animal Bazaar
+        </h2>
+        <p className="text-gray-600">
+          Animal Bazaar is dedicated to helping you find your perfect pet while
+          ensuring a seamless and delightful experience. Our focus is on
+          quality, trust, and exceptional service.
+        </p>
+        <ul className="space-y-3 text-gray-600">
+          <li>📞 Book Service 24/7</li>
+          <li>👩‍💼 Experienced, Professional Staff</li>
+          <li>✅ Insured & Background Checked</li>
+          <li>🏠 Free In-Home Consultation</li>
+          <li>😊 Customer Satisfaction Surveys</li>
+        </ul>
+        <button className="px-6 py-2 bg-green-500 text-white font-semibold rounded-3xl shadow hover:bg-green-600 transition duration-200">
+          Contact Us
+        </button>
       </div>
-    </div>
+
+      {/* Right Image Grid */}
+      <div className="lg:w-1/2 grid grid-cols-2 gap-4">
+        <Image
+          height="100"
+          width="100"
+          src="https://i.ibb.co.com/HYnWfHk/FB-IMG-16760824427475056.jpg"
+          alt="Animal 1"
+          className="w-full h-auto rounded-lg shadow-lg"
+        />
+        <Image
+          height="200"
+          width="200"
+          src="https://i.ibb.co.com/wsfz1NP/FB-IMG-16766010392534402.jpg"
+          alt="Animal 2"
+          className="w-full h-auto rounded-lg shadow-lg"
+        />
+        <Image
+          height="200"
+          width="200"
+          src="https://i.ibb.co.com/Q6xwHxc/FB-IMG-16761682792266182.jpg"
+          alt="Animal 3"
+          className="w-full h-auto rounded-lg shadow-lg"
+        />
+        <Image
+          height="100"
+          width="200"
+          src="https://i.ibb.co.com/Xk9Lbhh/FB-IMG-16761792079135777.jpg"
+          alt="Animal 4"
+          className="w-full h-auto rounded-lg shadow-lg"
+        />
+      </div>
+    </section>
   );
 };
 
-export default About;
+export default AboutSection;

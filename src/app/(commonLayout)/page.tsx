@@ -5,6 +5,7 @@ import Services from "./components/page/home/Services";
 import WhyChooseUs from "./components/page/home/WhyChooseUs";
 import Testimonial from "./components/page/home/TestimonialSection";
 import OfferSection from "./components/page/home/OfferSection";
+import NewsletterForm from "./components/page/home/NewsLetter";
 
 const HomePage = () => {
   return (
@@ -17,6 +18,7 @@ const HomePage = () => {
         <WhyChooseUs />
         <Testimonial />
       </div>
+      <NewsletterForm />
     </div>
   );
 };

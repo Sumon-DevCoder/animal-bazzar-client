@@ -1,17 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
-import { usePathname } from "next/navigation";
 import { useState } from "react";
-import logoImg from "../../../../../../public/assets/animal_logo.jpg";
-import Image from "next/image";
-import Link from "next/link";
 import useCurrentUserInfo from "../../../../../hooks/useCurrentUserInfo";
 import useDarkMode from "@/hooks/useDarkMode";
 import DropDownProfile from "@/app/components/DropDownProfile";
 import PrimaryButton from "@/app/components/PrimaryButton";
 import { FaSignInAlt } from "react-icons/fa";
 import useNavLinks from "@/hooks/useNavLinks";
+import BrandLogo from "@/app/components/BrandLogo";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -25,7 +22,7 @@ const Navbar = () => {
 
   return (
     <div className="sticky top-0 z-50 ">
-      <div className="navbar md:px-5 md:h-10 text-white dark:bg-gray-800 bg-gray-100 bg-opacity-50">
+      <div className="navbar md:px-5 h-6 md:h-10 text-white dark:bg-gray-800 bg-[#F3F4F6] shadow-sm">
         <div className="navbar-start">
           <div className="dropdown">
             <div
@@ -78,23 +75,12 @@ const Navbar = () => {
               </ul>
             )}
           </div>
-          <Link
-            href={`/`}
-            className="text-lg flex items-center space-x-2 p-2  md:text-xl"
-          >
-            <Image
-              className="h-5 md:h-7 w-5 md:w-7"
-              src={logoImg}
-              alt="Animal Bazaar Logo"
-            />
-            <span className="text-[16px] md:text-2xl text-green-600 mt-1">
-              Animal Bazaar
-            </span>
-          </Link>
+          {/* brand logo */}
+          <BrandLogo />
         </div>
         {/* lg navlink */}
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1 font-semibold text-base ">
+          <ul className="menu menu-horizontal px-1 font-semibold text-base">
             {Links}
           </ul>
         </div>

@@ -95,34 +95,40 @@ const ProductList = ({ productsData }: ProductListProps) => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {currentProducts.map((product) => (
+            // product card
             <div
               key={product._id}
-              className="border dark:border-gray-700 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 ease-in-out transform hover:-translate-y-2 hover:scale-105"
+              className="border dark:border-gray-700 bg-white dark:bg-gray-800  rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 ease-in-out transform hover:-translate-y-2"
             >
               <Image
                 src={product.image}
                 alt={product.name}
                 height={500}
                 width={500}
-                className="w-full h-56 object-cover rounded-lg mb-4 transition-all duration-300 ease-in-out transform hover:scale-105"
+                className="w-full h-56 object-cover  mb-4 p-1 rounded-lg"
               />
-              <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-2">
-                {product.name}
-              </h2>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">
-                Category:{" "}
-                <span className="text-gray-800 dark:text-gray-200">
-                  {product.category}
-                </span>
-              </p>
-              <p className="text-green-700 dark:text-green-400 font-bold text-lg">
-                ${product.price}
-              </p>
-              <Link href={`/product/${product._id}`}>
-                <button className="mt-4 w-full py-2 bg-green-600 text-white rounded-lg shadow-md hover:bg-green-700 focus:ring-2 focus:ring-green-500 focus:outline-none transition duration-200 transform hover:scale-105">
-                  View Details
-                </button>
-              </Link>
+              <div className="p-2">
+                <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-2">
+                  {product.name}
+                </h2>
+                <div className="flex justify-between px-1">
+                  <p className="text-green-700 dark:text-green-400 font-bold text-lg">
+                    ${product.price}
+                  </p>
+                  <p className="text-gray-600 dark:text-gray-400 mb-1 font-bold text-md">
+                    Category:{" "}
+                    <span className="text-gray-800 dark:text-gray-200 font-bold text-md">
+                      {product.category}
+                    </span>
+                  </p>
+                </div>
+
+                <Link href={`/product/${product._id}`}>
+                  <button className="mt-4 w-full  py-2 bg-green-600 text-white rounded-lg shadow-md hover:bg-green-700 focus:ring-2 focus:ring-green-500 focus:outline-none transition duration-200 transform hover:scale-105">
+                    View Details
+                  </button>
+                </Link>
+              </div>
             </div>
           ))}
         </div>

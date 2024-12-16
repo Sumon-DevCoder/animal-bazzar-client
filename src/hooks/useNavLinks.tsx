@@ -4,14 +4,12 @@ import useCurrentUserInfo from "./useCurrentUserInfo";
 
 const useNavLinks = () => {
   const pathname = usePathname();
-  const { role, email } = useCurrentUserInfo();
+  const { role } = useCurrentUserInfo();
 
   // Define a reusable style function
   const getLinkClass = (path: string) =>
     `p-2 rounded-lg text-slate-800 dark:text-slate-100 ${
-      pathname === path
-        ? "text-orange-400 border-orange-600 dark:text-orange-300 dark:border-orange-500"
-        : ""
+      pathname === path ? "text-green-600" : "text-black dark:text-white"
     }`;
 
   return (
@@ -28,7 +26,7 @@ const useNavLinks = () => {
       <Link href="/contact" className={getLinkClass("/contact")}>
         Contact
       </Link>
-      {email && (
+      {role === "user" && (
         <>
           <Link href="/cart" className={getLinkClass("/cart")}>
             Carts
