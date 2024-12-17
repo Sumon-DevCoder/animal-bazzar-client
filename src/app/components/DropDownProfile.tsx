@@ -38,11 +38,11 @@ const DropDownProfile = () => {
   };
 
   return (
-    <div className="relative">
+    <div className="relative pr-2 md:pr-0">
       {user ? (
         <>
           <button onClick={toggleDropdown}>
-            <div className="avatar flex justify-center w-10 h-10 md:w-12 md:h-12">
+            <div className="avatar flex justify-center w-10 h-10 md:w-11 md:h-11">
               {user?.img ? (
                 <img
                   src={user?.img}

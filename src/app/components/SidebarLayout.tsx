@@ -3,7 +3,7 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import logoImg from "../../../public/assets/animal_logo.jpg";
+import logoImg from "../../../public/assets/logo.png";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { FaChevronDown, FaChevronUp, FaBars, FaTimes } from "react-icons/fa";

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
-import offerImg from "../../../../../../public/assets/australian-shepherd-dog-1.jpg";
+import offerImg from "../../../../../../public/assets/cat.png";
 
 const OfferSection = () => {
   const [timeLeft, setTimeLeft] = useState({
@@ -98,7 +98,7 @@ const OfferSection = () => {
             </span>
           </div>
         </div>
-        <button className="mt-6 px-6 py-2 md:px-8 md:py-3 bg-green-600 dark:bg-gray-500 text-white text-base md:text-lg font-semibold rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-all duration-300 shadow-md">
+        <button className="mt-6 px-6 py-2 md:px-8 md:py-3 bg-green-600 dark:bg-gray-500 text-white text-base md:text-lg font-semibold rounded-lg hover:bg-green-700 dark:hover:bg-green-600 transition-all duration-300 shadow-md">
           Add To Cart
         </button>
       </div>

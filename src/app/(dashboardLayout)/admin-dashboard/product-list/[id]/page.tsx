@@ -26,27 +26,33 @@ const UpdateProduct = () => {
   const [updateProductById] = useUpdateProductByIdMutation();
   const router = useRouter();
 
-  // Image upload function
-  const uploadImageToImgBB = async (file: File) => {
+  // Image upload function for multiple files
+  const uploadImagesToImgBB = async (files: FileList): Promise<string[]> => {
+    const urls: string[] = [];
     const url = `https://api.imgbb.com/1/upload?key=${"9b72c2e7f55726fd9a28bfb8bfedc08b"}`;
-    const formData = new FormData();
-    formData.append("image", file);
 
-    try {
-      const response = await fetch(url, {
-        method: "POST",
-        body: formData,
-      });
-      const data = await response.json();
-      if (data.success) {
-        return data.data.url;
-      } else {
-        throw new Error(data.error.message);
+    // Upload each file one by one
+    for (let i = 0; i < files.length; i++) {
+      const formData = new FormData();
+      formData.append("image", files[i]);
+
+      try {
+        const response = await fetch(url, {
+          method: "POST",
+          body: formData,
+        });
+        const data = await response.json();
+        if (data.success) {
+          urls.push(data.data.url); // Add the uploaded image URL to the array
+        } else {
+          throw new Error("Image upload failed");
+        }
+      } catch (error) {
+        console.error("Error uploading image:", error);
       }
-    } catch (error) {
-      console.error("Error uploading image:", error);
-      return null;
     }
+
+    return urls;
   };
 
   // Set default values when product data is loaded
@@ -57,6 +63,12 @@ const UpdateProduct = () => {
       setValue("price", product.price);
       setValue("stockQuantity", product.stockQuantity);
       setValue("category", product.category);
+      setValue("ageValue", product.age?.value);
+      setValue("ageUnit", product.age?.unit);
+      setValue("color", product.color);
+      setValue("sizeValue", product.size?.value);
+      setValue("sizeUnit", product.size?.unit);
+      setValue("img", product.img || []); // Array of images
     }
   }, [product, setValue]);
 
@@ -65,24 +77,34 @@ const UpdateProduct = () => {
     const toastId = toast.loading("Updating...");
 
     try {
-      // Handle image upload only if a new image is provided
-      let imgUrl = product?.image; // Default to existing image if no new image is uploaded
+      let imgUrls = product?.img || []; // Default to existing images if no new images are uploaded
+
+      // If new images are uploaded, handle the upload process
       if (data.img && data.img.length > 0) {
-        const imgFile = data.img[0] as File;
-        imgUrl = await uploadImageToImgBB(imgFile);
-        if (!imgUrl) {
+        const imgFiles = data.img as FileList; // Ensure this is a FileList
+        imgUrls = await uploadImagesToImgBB(imgFiles);
+        if (!imgUrls.length) {
           throw new Error("Image upload failed");
         }
       }
 
       // Construct updated product information
       const productInfo = {
-        name: data.productName, // Defaults to existing name since we set it in useEffect
-        description: data.description, // Defaults to existing description
-        price: Number(data.price), // Defaults to existing price
-        stockQuantity: Number(data.stockQuantity), // Defaults to existing stock quantity
-        category: data.category, // Defaults to existing category
-        image: imgUrl, // Use updated or existing image URL
+        name: data.productName,
+        description: data.description,
+        price: Number(data.price),
+        stockQuantity: Number(data.stockQuantity),
+        category: data.category,
+        img: imgUrls, // Use array of image URLs
+        age: {
+          value: Number(data.ageValue),
+          unit: data.ageUnit,
+        },
+        color: data.color,
+        size: {
+          value: Number(data.sizeValue),
+          unit: data.sizeUnit,
+        },
       };
 
       // Update product by ID
@@ -102,11 +124,11 @@ const UpdateProduct = () => {
     }
   };
 
-  // Validation for minimum 1 image upload
+  // Validation for a maximum of 3 images
   const validateFiles = (files: FileList): Promise<string | true> => {
     return new Promise((resolve) => {
-      if (files.length > 1) {
-        resolve("Only one image can be uploaded");
+      if (files.length > 3) {
+        resolve("You can only upload up to 3 images.");
       }
       resolve(true);
     });
@@ -232,45 +254,139 @@ const UpdateProduct = () => {
             className="w-full rounded-md border border-gray-300 bg-white py-3 px-4 text-sm font-medium text-gray-700 outline-none focus:border-indigo-500 focus:shadow-md"
           >
             <option value="">Select a category</option>
-            <option value="fish">Fish</option>
-            <option value="duck">Duck</option>
-            <option value="hen">Hen</option>
-            <option value="cow">Cow</option>
-            <option value="bird">Bird</option>
+            <option value="Fish">Fish</option>
+            <option value="Duck">Duck</option>
+            <option value="Hen">Hen</option>
+            <option value="Cow">Cow</option>
+            <option value="Bird">Bird</option>
           </select>
           {errors.category && (
             <p className="text-red-500">{errors.category.message as string}</p>
           )}
         </div>
 
-        {/* Product Image */}
+        {/* Age */}
         <div className="mb-5">
           <label
-            htmlFor="product-image"
+            htmlFor="age"
             className="mb-2 block text-sm font-medium text-indigo-700"
           >
-            Product Image (optional)
+            Age
+          </label>
+          <div className="flex space-x-4">
+            <input
+              type="number"
+              {...register("ageValue", {
+                required: "Age value is required",
+              })}
+              id="ageValue"
+              placeholder="Age"
+              className="w-full rounded-md border border-gray-300 bg-white py-3 px-4 text-sm font-medium text-gray-700 outline-none focus:border-indigo-500 focus:shadow-md"
+            />
+            <select
+              {...register("ageUnit", { required: "Age unit is required" })}
+              id="ageUnit"
+              className="w-full rounded-md border border-gray-300 bg-white py-3 px-4 text-sm font-medium text-gray-700 outline-none focus:border-indigo-500 focus:shadow-md"
+            >
+              <option value="day">Day</option>
+              <option value="week">Week</option>
+              <option value="month">Month</option>
+              <option value="year">Year</option>
+            </select>
+          </div>
+          {errors.ageValue && (
+            <p className="text-red-500">{errors.ageValue.message as string}</p>
+          )}
+        </div>
+
+        {/* Color */}
+        <div className="mb-5">
+          <label
+            htmlFor="color"
+            className="mb-2 block text-sm font-medium text-indigo-700"
+          >
+            Color
+          </label>
+          <input
+            type="text"
+            {...register("color", {
+              required: "Color is required",
+            })}
+            id="color"
+            placeholder="Enter color"
+            className="w-full rounded-md border border-gray-300 bg-white py-3 px-4 text-sm font-medium text-gray-700 outline-none focus:border-indigo-500 focus:shadow-md"
+          />
+          {errors.color && (
+            <p className="text-red-500">{errors.color.message as string}</p>
+          )}
+        </div>
+
+        {/* Size */}
+        <div className="mb-5">
+          <label
+            htmlFor="size"
+            className="mb-2 block text-sm font-medium text-indigo-700"
+          >
+            Size
+          </label>
+          <div className="flex space-x-4">
+            <input
+              type="number"
+              {...register("sizeValue", {
+                required: "Size value is required",
+              })}
+              id="sizeValue"
+              placeholder="Size"
+              className="w-full rounded-md border border-gray-300 bg-white py-3 px-4 text-sm font-medium text-gray-700 outline-none focus:border-indigo-500 focus:shadow-md"
+            />
+            <select
+              {...register("sizeUnit", { required: "Size unit is required" })}
+              id="sizeUnit"
+              className="w-full rounded-md border border-gray-300 bg-white py-3 px-4 text-sm font-medium text-gray-700 outline-none focus:border-indigo-500 focus:shadow-md"
+            >
+              <option value="kg">kg</option>
+              <option value="g">g</option>
+              <option value="cm">cm</option>
+              <option value="inches">inches</option>
+            </select>
+          </div>
+          {errors.sizeValue && (
+            <p className="text-red-500">{errors.sizeValue.message as string}</p>
+          )}
+        </div>
+
+        {/* Images */}
+        <div className="mb-5">
+          <label
+            htmlFor="img"
+            className="mb-2 block text-sm font-medium text-indigo-700"
+          >
+            Images
           </label>
           <input
             type="file"
-            {...register("img", { validate: validateFiles })}
-            id="product-image"
+            multiple
             accept="image/*"
+            {...register("img", {
+              required: "At least one image is required",
+              validate: validateFiles,
+            })}
+            id="img"
             className="w-full rounded-md border border-gray-300 bg-white py-3 px-4 text-sm font-medium text-gray-700 outline-none focus:border-indigo-500 focus:shadow-md"
           />
-          <small className="text-gray-500">Upload a new image (optional)</small>
           {errors.img && (
             <p className="text-red-500">{errors.img.message as string}</p>
           )}
         </div>
 
-        {/* Submit Button */}
-        <button
-          type="submit"
-          className="w-full rounded-md bg-indigo-600 py-3 text-sm font-semibold text-white hover:bg-indigo-700 focus:outline-none"
-        >
-          Update Product
-        </button>
+        <div className="flex justify-center">
+          <button
+            type="submit"
+            className="w-full rounded-md bg-indigo-700 py-3 px-4 text-white text-sm font-medium focus:outline-none"
+          >
+            Update Product
+          </button>
+        </div>
       </form>
     </div>
   );

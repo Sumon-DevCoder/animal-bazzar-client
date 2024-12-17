@@ -16,7 +16,7 @@ export default function AdminDashboardLayout({
       <div className="bg-gray-800">
         <SidebarLayout />
       </div>
-      <div className="flex-grow p-2">{children}</div>
+      <div className="flex-grow">{children}</div>
     </div>
   );
 }

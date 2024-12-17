@@ -18,8 +18,19 @@ const ProductDetailsPage = () => {
 
   const [createCart] = useCreateCartMutation();
 
-  const { name, price, image, description, _id, category, stockQuantity } =
-    data?.data || {};
+  const {
+    _id,
+    name,
+    description,
+    price,
+    stockQuantity,
+    category,
+    img,
+    // like,
+    // age,
+    // color,
+    // size,
+  } = data?.data || {};
 
   const handleAddCart = async (productId: string) => {
     if (email && email) {
@@ -30,8 +41,6 @@ const ProductDetailsPage = () => {
           price,
           user: email,
         };
-
-        console.log(cartInfo);
 
         const res = await createCart(cartInfo).unwrap();
 
@@ -48,23 +57,20 @@ const ProductDetailsPage = () => {
   };
 
   return (
-    <div className="flex justify-center items-center  min-h-screen bg-gradient-to-br from-purple-100 to-indigo-200 p-6 py-20">
-      <div className="max-w-3xl w-full bg-white rounded-3xl shadow-2xl overflow-hidden transform transition duration-500 hover:scale-105">
-        <div className="relative">
+    <div className="min-h-screen bg-gradient-to-br from-purple-100 to-indigo-200 p-8 py-20">
+      <div className="max-w-5xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden flex items-center">
+        <div className="w-1/2 p-6">
           <Image
-            className="w-full h-72 object-cover rounded-t-3xl"
-            src={image}
+            className="w-full h-full object-cover rounded-lg shadow-md"
+            src={img?.[0]}
             alt={name}
             width={500}
-            height={400}
-            layout="responsive"
+            height={500}
+            layout="intrinsic"
           />
-          <div className="absolute top-3 left-3 bg-teal-500 text-white px-3 py-1 rounded-full text-xs font-semibold">
-            Featured
-          </div>
         </div>
 
-        <div className="p-8">
+        <div className="w-1/2 p-8">
           <h2 className="text-3xl font-semibold text-gray-800 mb-3">{name}</h2>
           <p className="text-lg text-gray-600 mb-5">{description}</p>
 

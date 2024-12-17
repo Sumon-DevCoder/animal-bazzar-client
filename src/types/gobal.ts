@@ -50,13 +50,24 @@ export enum CartStatus {
 }
 
 export type TProduct = {
+  _id: string;
   name: string;
   description: string;
   price: number;
   stockQuantity: number;
   category: string;
   isDeleted: boolean;
-  image: string;
+  img: string[];
+  age: {
+    value: number;
+    unit: "day" | "week" | "month" | "year";
+  };
+  like: number;
+  color: string;
+  size: {
+    value: number;
+    unit: "kg" | "gm";
+  };
 };
 
 export type TCart = {

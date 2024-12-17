@@ -2,8 +2,6 @@
 
 import { useCreateProductMutation } from "@/redux/features/product/productApi";
 import { useRouter } from "next/navigation";
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { FieldValues, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -48,12 +46,18 @@ const CreateProduct = () => {
     const toastId = toast.loading("Creating...");
 
     try {
-      // Upload the single image
-      const imgFile = data.img[0] as File; // Get the first file only
-      const imgUrl = await uploadImageToImgBB(imgFile);
-      if (!imgUrl) {
-        throw new Error("Image upload failed");
+      // Upload the multiple images
+      const imgUrls: string[] = [];
+      for (const imgFile of data.img) {
+        const imgUrl = await uploadImageToImgBB(imgFile);
+        if (imgUrl) {
+          imgUrls.push(imgUrl);
+        } else {
+          throw new Error("Image upload failed");
+        }
       }
+
+      console.log("imgUrl", imgUrls);
 
       const productInfo = {
         name: data.productName,
@@ -61,12 +65,21 @@ const CreateProduct = () => {
         price: Number(data.price),
         stockQuantity: Number(data.stockQuantity),
         category: data.category,
-        image: imgUrl, // Store the single image URL
+        img: imgUrls, // Multiple image URLs
+        age: {
+          value: Number(data.ageValue),
+          unit: data.ageUnit,
+        },
+        size: {
+          value: Number(data.sizeValue),
+          unit: data.sizeUnit,
+        },
+        color: data.color,
       };
 
       console.log(productInfo);
 
-      // send to data to databse
+      // Send data to the database
       const res = await CreateProduct(productInfo).unwrap();
 
       if (res) {
@@ -120,6 +133,27 @@ const CreateProduct = () => {
             <p className="text-red-500">
               {errors.productName.message as string}
             </p>
+          )}
+        </div>
+
+        <div className="mb-5">
+          <label
+            htmlFor="color"
+            className="mb-2 block text-sm font-medium text-indigo-700"
+          >
+            Color Name
+          </label>
+          <input
+            type="text"
+            {...register("color", {
+              required: "Color Name is required",
+            })}
+            id="color"
+            placeholder="Color Name"
+            className="w-full rounded-md border border-gray-300 bg-white py-3 px-4 text-sm font-medium text-gray-700 outline-none focus:border-indigo-500 focus:shadow-md"
+          />
+          {errors.colorName && (
+            <p className="text-red-500">{errors.colorName.message as string}</p>
           )}
         </div>
 
@@ -235,19 +269,79 @@ const CreateProduct = () => {
           <input
             type="file"
             {...register("img", {
-              required: "An image is required",
+              required: "At least 1 image is required",
               validate: validateFiles,
             })}
             id="product-image"
             accept="image/*"
             className="w-full rounded-md border border-gray-300 bg-white py-3 px-4 text-sm font-medium text-gray-700 outline-none focus:border-indigo-500 focus:shadow-md"
+            multiple
           />
-          <small className="text-gray-500">Upload an image</small>
+          <small className="text-gray-500">Upload at least one image</small>
           {errors.img && (
             <p className="text-red-500">{errors.img.message as string}</p>
           )}
         </div>
 
+        {/* Age */}
+        <div className="mb-5">
+          <label
+            htmlFor="age"
+            className="mb-2 block text-sm font-medium text-indigo-700"
+          >
+            Age
+          </label>
+          <input
+            type="number"
+            {...register("ageValue", {
+              required: "Age value is required",
+              min: { value: 0, message: "Age must be positive" },
+            })}
+            id="age"
+            placeholder="Age value"
+            className="w-full rounded-md border border-gray-300 bg-white py-3 px-4 text-sm font-medium text-gray-700 outline-none focus:border-indigo-500 focus:shadow-md"
+          />
+          <select
+            {...register("ageUnit", { required: "Age unit is required" })}
+            className="w-full rounded-md border border-gray-300 bg-white py-3 px-4 text-sm font-medium text-gray-700 outline-none focus:border-indigo-500 focus:shadow-md"
+          >
+            <option value="">Select unit</option>
+            <option value="day">Day</option>
+            <option value="week">Week</option>
+            <option value="month">Month</option>
+            <option value="year">Year</option>
+          </select>
+        </div>
+
+        {/* Size */}
+        <div className="mb-5">
+          <label
+            htmlFor="size"
+            className="mb-2 block text-sm font-medium text-indigo-700"
+          >
+            Size
+          </label>
+          <input
+            type="number"
+            {...register("sizeValue", {
+              required: "Size value is required",
+              min: { value: 0, message: "Size must be positive" },
+            })}
+            id="size"
+            placeholder="Size value"
+            className="w-full rounded-md border border-gray-300 bg-white py-3 px-4 text-sm font-medium text-gray-700 outline-none focus:border-indigo-500 focus:shadow-md"
+          />
+          <select
+            {...register("sizeUnit", { required: "Size unit is required" })}
+            className="w-full rounded-md border border-gray-300 bg-white py-3 px-4 text-sm font-medium text-gray-700 outline-none focus:border-indigo-500 focus:shadow-md"
+          >
+            <option value="">Select unit</option>
+            <option value="kg">Kg</option>
+            <option value="gm">Grams</option>
+          </select>
+        </div>
+
+        {/* Submit Button */}
         <button
           type="submit"
           className="mt-4 w-full rounded-md bg-indigo-600 py-3 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none"
