@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { TProduct } from "@/app/(commonLayout)/product/page";
@@ -11,11 +12,16 @@ import Link from "next/link";
 import { toast } from "sonner";
 import Swal from "sweetalert2";
 import { useState } from "react";
+import DynamicLoader from "@/app/components/DynamicLoader";
 
 const ProductList = () => {
-  const { data } = useGetProductsQuery({});
+  const { data, isLoading } = useGetProductsQuery(null);
   const [deleteProduct] = useDeleteProductByIdMutation();
   const [searchQuery, setSearchQuery] = useState("");
+
+  if (isLoading) {
+    return <DynamicLoader />;
+  }
 
   const products = data?.data?.result || [];
 
@@ -114,7 +120,7 @@ const ProductList = () => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-            {filteredProducts.map((product: TProduct) => (
+            {filteredProducts?.map((product: TProduct) => (
               <tr key={product._id}>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <Image

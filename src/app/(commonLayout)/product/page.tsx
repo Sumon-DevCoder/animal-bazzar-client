@@ -1,6 +1,7 @@
 import nexiousInstance from "@/config/nexious.config";
 import React from "react";
 import ProductList from "../components/page/product/ProductList";
+// import { shuffleArrayData } from "@/app/components/ShuffleArrayData";
 
 export type TProduct = {
   _id: string;
@@ -37,6 +38,8 @@ const ProductPage = async () => {
   console.log("res", res);
 
   const products = res?.data?.data?.result || [];
+
+  // const products = shuffleArrayData(productData);
 
   return (
     <div className="p-6">

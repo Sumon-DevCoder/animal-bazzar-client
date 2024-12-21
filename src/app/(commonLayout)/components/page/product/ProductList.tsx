@@ -4,13 +4,9 @@ import ProductCard from "@/app/components/ProductCard";
 import { useEffect, useState } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
-type ProductListProps = {
-  productsData: TProduct[];
-};
-
 const categories = ["All", "Fish", "Cow", "Hen", "Duck"];
 
-const ProductList = ({ productsData }: ProductListProps) => {
+const ProductList = ({ productsData }: { productsData: TProduct[] }) => {
   const [products] = useState(productsData || []);
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [searchTerm, setSearchTerm] = useState("");

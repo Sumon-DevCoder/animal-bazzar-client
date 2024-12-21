@@ -42,8 +42,8 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 
   console.log("result fo custom base query", result);
 
-  if (result.error?.status === 404) {
-    return toast.error(result.error?.data?.message);
+  if (result?.error?.status === 404) {
+    return console.error(result.error?.data?.message);
   } else if (result.error?.status === 403) {
     return toast.error(
       "Forbidden: You do not have permission to access this resource."

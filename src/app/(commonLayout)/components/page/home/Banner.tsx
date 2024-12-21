@@ -31,7 +31,10 @@ const Banner = () => {
               Your Fingertips
             </h1>
 
-            <p className="text-lg md:text-xl mb-4 lg:mb-6 mt-4 max-w-2xl mx-auto font-sans">
+            <p
+              data-aos="fade-up"
+              className="text-lg md:text-xl mb-4 lg:mb-6 mt-4 max-w-2xl mx-auto font-sans"
+            >
               Find everything you need for your pets and animal companions, from
               food to accessories, loyal dog, a curious cat, or a charming bird
               all in one place.

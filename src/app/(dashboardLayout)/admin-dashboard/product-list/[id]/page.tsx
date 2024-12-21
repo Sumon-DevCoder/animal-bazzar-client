@@ -345,9 +345,7 @@ const UpdateProduct = () => {
               className="w-full rounded-md border border-gray-300 bg-white py-3 px-4 text-sm font-medium text-gray-700 outline-none focus:border-indigo-500 focus:shadow-md"
             >
               <option value="kg">kg</option>
-              <option value="g">g</option>
-              <option value="cm">cm</option>
-              <option value="inches">inches</option>
+              <option value="gm">gm</option>
             </select>
           </div>
           {errors.sizeValue && (

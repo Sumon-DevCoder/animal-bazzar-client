@@ -9,6 +9,7 @@ const ProductCard = ({ product }: { product: TProduct }) => {
   // States for random rating and like count
   const [rating, setRating] = useState<string>("0.0");
   const [likeCount, setLikeCount] = useState<number>(0);
+  const [hovered, setHovered] = useState(false);
 
   // Function to generate a random rating
   const generateRandomRating = () => {
@@ -31,20 +32,24 @@ const ProductCard = ({ product }: { product: TProduct }) => {
   };
 
   return (
-    <div className="relative w-72 bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 group">
+    <div className="relative w-72 bg-white dark:bg-gray-800   dark:border-b dark:border-r dark:border-l border-gray-500 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-1000 group">
       {/* Product Image */}
-      <div className="w-full h-48 bg-gray-200">
+      <div
+        className="w-full h-48 bg-gray-200 dark:bg-gray-800"
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
         <Image
-          src={img?.[0] || "/default-image.jpg"} // Default image fallback
+          src={hovered && img?.[1] ? img[1] : img?.[0] || "/default-image.jpg"} // Hover effect logic
           alt={name || "Product Image"}
           width={256}
           height={160}
-          className="w-full h-full object-cover"
+          className={`w-full h-full object-cover transition-all duration-500 ease-in-out`} // Transition added here
         />
       </div>
 
       {/* Content Section */}
-      <div className="p-4 space-y-2">
+      <div className="p-3 space-y-2">
         {/* Title and Like */}
         <div className="flex justify-between items-center">
           <h2 className="text-green-600 font-bold text-lg truncate">
@@ -52,19 +57,27 @@ const ProductCard = ({ product }: { product: TProduct }) => {
           </h2>
           <button
             onClick={handleLikeClick}
-            className="text-gray-500 hover:text-red-500 flex gap-0.5"
+            className="text-gray-500 dark:text-gray-300 hover:text-red-500 flex gap-0.5"
           >
-            <span>{likeCount}</span> <span>{like ? "❤️" : "🤍"}</span>
+            {/* <span>{likeCount}</span> <span>{like ? "❤️" : "🤍"}</span> */}
+            <span>{likeCount}</span> <span>{like ? "❤️" : "❤️"}</span>
           </button>
         </div>
 
         {/* Price and Rating */}
         <div className="flex justify-between items-center">
-          <span className="text-red-500 font-semibold">
-            ${price?.toFixed(2) || "0.00"}
+          {/* <span className="text-red-500 font-semibold">${price} </span> */}
+          <span className="text-red-500 dark:text-red-400 font-semibold">
+            $
+            {price >= 1000
+              ? new Intl.NumberFormat("en-US").format(price)
+              : price}
           </span>
+
           <span className="flex items-center gap-0.5">
-            <span className="text-gray-600 text-md">{rating || "N/A"}</span>
+            <span className="text-gray-600 dark:text-gray-300 text-md">
+              {rating || "N/A"}
+            </span>
             <span className="pb-1">⭐</span>
           </span>
         </div>
@@ -79,20 +92,20 @@ const ProductCard = ({ product }: { product: TProduct }) => {
           Details
         </button>
       </div> */}
-      <div className="relative px-8 bottom-0 inset-x-0 flex items-center justify-center bg-white py-2 opacity-100 group-hover:opacity-100 transition-opacity duration-300">
+      <div className="relative px-8 bottom-0 inset-x-0 flex items-center justify-center bg-white dark:bg-gray-800 py-2 opacity-100 group-hover:opacity-100 transition-opacity duration-300">
         <button className=" text-green-600 hover:text-white text-nowrap border-l border-t border-b border-green-600  px-6 py-2 rounded-l-lg hover:bg-green-600 transition-all duration-300 flex items-center justify-center">
           Add to Cart
         </button>
 
         {/* Container for the "or" circle, now flex-based for centering */}
         <div className="flex items-center">
-          <span className="text-gray-600 absolute right-[132px] rounded-full border p-2 h-8 w-8 bg-gray-200 flex items-center justify-center">
+          <span className="text-gray-600 dark:text-gray-300 absolute right-[132px] rounded-full border p-2 h-8 w-8 bg-gray-200 dark:bg-gray-700 flex items-center justify-center dark:border-gray-400">
             or
           </span>
         </div>
 
         <Link href={`/product/${_id}`}>
-          <button className=" text-nowrap border-r-green-500  border-r border-t border-b  border-green-600  px-6 py-2 rounded-r-lg text-white bg-green-600 hover:bg-green-700 transition-all duration-300 flex items-center justify-center">
+          <button className=" text-nowrap border-r-green-500 dark:text-gray-100  border-r border-t border-b  border-green-600  px-6 py-2 rounded-r-lg text-white bg-green-600 hover:bg-green-700  dark:bg-green-800 dark:hover:bg-green-600 transition-all duration-300 flex items-center justify-center">
             View Details
           </button>
         </Link>
